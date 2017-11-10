@@ -72,12 +72,7 @@ if(!isset($_SESSION['nama'])){
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-
-
-
-
-
-                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                  <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
         </div>
@@ -115,7 +110,7 @@ if(!isset($_SESSION['nama'])){
                             <span>Home</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="kas_rutin.html">
                             <i class="material-icons">assignment</i>
@@ -135,7 +130,7 @@ if(!isset($_SESSION['nama'])){
                                 <a href="#">Daftar Keuangan Kegiatan</a>
                             </li>
                         </ul>
-                    </li> 
+                    </li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">assignment</i>

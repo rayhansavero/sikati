@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2017 at 05:48 AM
+-- Generation Time: Nov 10, 2017 at 04:50 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -25,23 +25,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list_anggota`
+-- Table structure for table `list_admin`
 --
 
-CREATE TABLE `list_anggota` (
-  `id` int(11) NOT NULL,
-  `nama_anggota` varchar(50) NOT NULL
+CREATE TABLE `list_admin` (
+  `ID_ADMIN` varchar(9) NOT NULL,
+  `NAMA_ADMIN` varchar(30) DEFAULT NULL,
+  `LEVEL` varchar(10) DEFAULT NULL,
+  `PASSWORD` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `list_anggota`
+-- Dumping data for table `list_admin`
 --
 
-INSERT INTO `list_anggota` (`id`, `nama_anggota`) VALUES
-(1, 'Handoko'),
-(2, 'Sujatmiko'),
-(3, 'Haryono'),
-(4, 'Joko Sableng');
+INSERT INTO `list_admin` (`ID_ADMIN`, `NAMA_ADMIN`, `LEVEL`, `PASSWORD`) VALUES
+('e41150559', 'Rayhan Savero', 'Bendahara', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list_data_kegiatan`
+--
+
+CREATE TABLE `list_data_kegiatan` (
+  `ID_DATA` varchar(3) NOT NULL,
+  `ID_JUDUL` varchar(3) DEFAULT NULL,
+  `ID_MASTER` varchar(3) DEFAULT NULL,
+  `URAIAN` varchar(30) DEFAULT NULL,
+  `DEBIT_KGT` float(8,0) DEFAULT NULL,
+  `KREDIT_KGT` float(8,0) DEFAULT NULL,
+  `JUMLAH` float(8,0) DEFAULT NULL,
+  `TANGGAL` date DEFAULT NULL,
+  `KETERANGAN` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `list_judul_kegiatan`
+--
+
+CREATE TABLE `list_judul_kegiatan` (
+  `ID_JUDUL` varchar(3) NOT NULL,
+  `JUDUL_KEGIATAN` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -50,35 +78,45 @@ INSERT INTO `list_anggota` (`id`, `nama_anggota`) VALUES
 --
 
 CREATE TABLE `list_kas_rutin` (
-  `id` int(4) NOT NULL,
-  `nama_anggota` varchar(50) NOT NULL,
-  `jml_kas` varchar(8) NOT NULL,
-  `tgl_bayar` date NOT NULL
+  `ID_KAS` varchar(3) NOT NULL,
+  `ID_PENGURUS` varchar(9) DEFAULT NULL,
+  `ID_MASTER` varchar(3) DEFAULT NULL,
+  `TGL` date DEFAULT NULL,
+  `JUMLAH` float(8,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `list_kas_rutin`
---
-
-INSERT INTO `list_kas_rutin` (`id`, `nama_anggota`, `jml_kas`, `tgl_bayar`) VALUES
-(1, 'Haryono', '5000', '2017-11-01'),
-(2, 'Joko Sableng', '8000', '2017-11-02');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list_kegiatan`
+-- Table structure for table `list_pengurus`
 --
 
-CREATE TABLE `list_kegiatan` (
-  `id` int(11) NOT NULL,
-  `nama_kegiatan` varchar(50) NOT NULL,
-  `tanggal` date NOT NULL,
-  `uraian` varchar(30) NOT NULL,
-  `debit` varchar(8) NOT NULL,
-  `kredit` varchar(8) NOT NULL,
-  `jumlah` varchar(8) NOT NULL,
-  `keterangan` varchar(30) NOT NULL
+CREATE TABLE `list_pengurus` (
+  `ID_PENGURUS` varchar(9) NOT NULL,
+  `NAMA_PENGURUS` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `list_pengurus`
+--
+
+INSERT INTO `list_pengurus` (`ID_PENGURUS`, `NAMA_PENGURUS`) VALUES
+('E41150001', 'Handoko Sujat'),
+('E41152345', 'Joko Sableng');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `master`
+--
+
+CREATE TABLE `master` (
+  `ID_MASTER` varchar(3) NOT NULL,
+  `TGL` date DEFAULT NULL,
+  `DEBET_MS` float(8,0) DEFAULT NULL,
+  `KREDIT_MS` float(8,0) DEFAULT NULL,
+  `KET_MS` varchar(30) DEFAULT NULL,
+  `SALDO_MS` float(8,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -86,42 +124,63 @@ CREATE TABLE `list_kegiatan` (
 --
 
 --
--- Indexes for table `list_anggota`
+-- Indexes for table `list_admin`
 --
-ALTER TABLE `list_anggota`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `list_admin`
+  ADD PRIMARY KEY (`ID_ADMIN`);
+
+--
+-- Indexes for table `list_data_kegiatan`
+--
+ALTER TABLE `list_data_kegiatan`
+  ADD PRIMARY KEY (`ID_DATA`),
+  ADD KEY `FK_DEBET_DAN_KREDIT` (`ID_MASTER`),
+  ADD KEY `FK_MEMILIKI` (`ID_JUDUL`);
+
+--
+-- Indexes for table `list_judul_kegiatan`
+--
+ALTER TABLE `list_judul_kegiatan`
+  ADD PRIMARY KEY (`ID_JUDUL`);
 
 --
 -- Indexes for table `list_kas_rutin`
 --
 ALTER TABLE `list_kas_rutin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`ID_KAS`),
+  ADD KEY `FK_DEBET` (`ID_MASTER`),
+  ADD KEY `FK_MEMBAYAR` (`ID_PENGURUS`);
 
 --
--- Indexes for table `list_kegiatan`
+-- Indexes for table `list_pengurus`
 --
-ALTER TABLE `list_kegiatan`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `list_pengurus`
+  ADD PRIMARY KEY (`ID_PENGURUS`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `master`
+--
+ALTER TABLE `master`
+  ADD PRIMARY KEY (`ID_MASTER`);
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `list_anggota`
+-- Constraints for table `list_data_kegiatan`
 --
-ALTER TABLE `list_anggota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `list_data_kegiatan`
+  ADD CONSTRAINT `FK_DEBET_DAN_KREDIT` FOREIGN KEY (`ID_MASTER`) REFERENCES `master` (`ID_MASTER`),
+  ADD CONSTRAINT `FK_MEMILIKI` FOREIGN KEY (`ID_JUDUL`) REFERENCES `list_judul_kegiatan` (`ID_JUDUL`);
+
 --
--- AUTO_INCREMENT for table `list_kas_rutin`
+-- Constraints for table `list_kas_rutin`
 --
 ALTER TABLE `list_kas_rutin`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `list_kegiatan`
---
-ALTER TABLE `list_kegiatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  ADD CONSTRAINT `FK_DEBET` FOREIGN KEY (`ID_MASTER`) REFERENCES `master` (`ID_MASTER`),
+  ADD CONSTRAINT `FK_MEMBAYAR` FOREIGN KEY (`ID_PENGURUS`) REFERENCES `list_pengurus` (`ID_PENGURUS`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

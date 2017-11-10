@@ -11,13 +11,13 @@ if(isset($_SESSION['nama'])){
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Sign In | Bootstrap Based Admin Template - Material Design</title>
+    <title>Login | Sikati</title>
     <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="font/material_icon.css" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -35,8 +35,8 @@ if(isset($_SESSION['nama'])){
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Admin<b>BSB</b></a>
-            <small>Admin BootStrap Based - Material Design</small>
+            <a href="javascript:void(0);"><b>Sikati</b></a>
+            <small>Sistem Informasi Keuangan HMJ TI</small>
         </div>
         <div class="card">
             <div class="body">
@@ -47,7 +47,7 @@ if(isset($_SESSION['nama'])){
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                            <input type="text" class="form-control" name="level" placeholder="Username" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -67,24 +67,16 @@ if(isset($_SESSION['nama'])){
                             <button class="btn btn-block bg-pink waves-effect" type="submit" name="signin" value="SIGN IN">SIGN IN</button>
                         </div>
                     </div>
-                    <div class="row m-t-15 m-b--20">
-                        <!--<div class="col-xs-6">
-                            <a href="sign-up.html">Register Now!</a>
-                        </div>-->
-                        <!--<div class="col-xs-6 align-right">
-                            <a href="forgot-password.html">Forgot Password?</a>
-                        </div>-->
-                    </div>
                 </form>
-                
+
                 <?php
-                    include "koneksi.php";
+                    $con=mysqli_connect('localhost','root','','sikati');
                     if (isset($_POST['signin'])){
-                        $cek = mysqli_query($conn, "SELECT * FROM user WHERE username = '".$_POST['username']."' AND password = '".$_POST['password']."' ");
+                        $cek = mysqli_query($con, "SELECT * FROM list_admin WHERE level = '".$_POST['level']."' AND password = '".$_POST['password']."' ");
                         $hasil = mysqli_fetch_array($cek);
                         $count = mysqli_num_rows($cek);
                         $nama = $hasil['nama'];
-                        
+
                         if($count > 0){
                             session_start();
                             $_SESSION['nama'] = $nama;
