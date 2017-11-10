@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['nama'])){
+if(isset($_SESSION['NAMA_ADMIN'])){
     header("location:index.php");
 }else{
 ?>
@@ -47,7 +47,7 @@ if(isset($_SESSION['nama'])){
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                            <input type="text" class="form-control" name="ID_ADMIN" placeholder="Id Admin" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -55,7 +55,7 @@ if(isset($_SESSION['nama'])){
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="PASSWORD" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="row">
@@ -80,14 +80,14 @@ if(isset($_SESSION['nama'])){
                 <?php
                     include "koneksi.php";
                     if (isset($_POST['signin'])){
-                        $cek = mysqli_query($conn, "SELECT * FROM user WHERE username = '".$_POST['username']."' AND password = '".$_POST['password']."' ");
+                        $cek = mysqli_query($conn, "SELECT * FROM list_admin WHERE ID_ADMIN = '".$_POST['ID_ADMIN']."' AND PASSWORD = '".$_POST['PASSWORD']."' ");
                         $hasil = mysqli_fetch_array($cek);
                         $count = mysqli_num_rows($cek);
-                        $nama = $hasil['nama'];
+                        $nama_admin = $hasil['NAMA_ADMIN'];
 
                         if($count > 0){
                             session_start();
-                            $_SESSION['nama'] = $nama;
+                            $_SESSION['NAMA_ADMIN'] = $nama_admin;
                             //$_SESSION['level'] = $hasil1;
                             header("location:index.php");
                         }else{

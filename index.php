@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['nama'])){
+if(!isset($_SESSION['NAMA_ADMIN'])){
     header("location:login.php");
 }else{
 ?>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['nama'])){
                     <img src="images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['nama'] ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['NAMA_ADMIN'] ?></div>
                     <div class="email"></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
