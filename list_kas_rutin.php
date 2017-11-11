@@ -212,65 +212,10 @@
                                       }
                                       ?>
                                       </tbody>
-                                        <!--tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>2011/04/25</td>
-                                            <td>Rp 5000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>2011/07/25</td>
-                                            <td>Rp 7000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>2009/01/12</td>
-                                            <td>Rp 8000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>2012/03/29</td>
-                                            <td>Rp 5000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>2008/11/28</td>
-                                            <td>Rp 7000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brielle Williamson</td>
-                                            <td>2012/12/02</td>
-                                            <td>Rp 2000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Herrod Chandler</td>
-                                            <td>2012/08/06</td>
-                                            <td>RP 5000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Rhona Davidson</td>
-                                            <td>2010/10/14</td>
-                                            <td>Rp 9000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Colleen Hurst</td>
-                                            <td>2009/09/15</td>
-                                            <td>Rp 5000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sonya Frost</td>
-                                            <td>2008/12/13</td>
-                                            <td>Rp 6000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jena Gaines</td>
-                                            <td>2008/12/19</td>
-                                            <td>Rp 6000</td>
-                                        </tr-->
-
                                 </table>
                             </div>
                           </div>
+
                         </div>
                     </div>
                 </div>
