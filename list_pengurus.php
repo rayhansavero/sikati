@@ -1,13 +1,53 @@
 <?php
 session_start();
-if(!isset($_SESSION['NAMA_ADMIN'])){
-    header("location:login.php");
-}else{
+if(!isset($_SESSION['NAMA_ADMIN']))
+{
+  header("location:login.php");
+}
+else
+{
 ?>
-
 <!DOCTYPE html>
 <html>
 
+<!--PROSES TAMBAH/EDIT DATA PENGURUS-->
+<?php
+$con=mysqli_connect('localhost','root','','sikati');
+
+if (isset($_POST['simpan']))
+{
+  $id= $_POST['id_pengurus'];
+  $nama= $_POST['nama_pengurus'];
+  $query= mysqli_query($con,"insert into list_pengurus values ('$id','$nama')") or die(mysql_error());
+  echo "
+  <script> alert ('Data Behasil di Tambahkan');
+  document.location='list_pengurus.php';
+  </script>
+  ";
+}
+elseif (isset($_POST['update']))
+{
+  $id= $_POST['id_pengurus'];
+  $nama= $_POST['nama_pengurus'];
+  $query= mysqli_query($con,"update list_pengurus set id_pengurus='$id',nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
+  echo "
+  <script> alert ('Data Behasil di Update');
+  document.location='list_pengurus.php';
+  </script>
+  ";
+}
+elseif (isset($_POST['hapus']))
+{
+  $id= $_POST['hapus'];
+  $query= mysqli_query($con,"delete from list_pengurus where id_pengurus='$id' ") or die(mysql_error());
+  echo "
+  <script> alert ('Data Behasil di Hapus');
+  document.location='list_pengurus.php';
+  </script>
+  ";
+}
+?>
+<!--END PROSES TAMBAH/EDIT DATA PENGURUS-->
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -19,6 +59,7 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
   <link href="font/material_icon.css" rel="stylesheet" type="text/css">
 
   <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="plugins/node-waves/waves.css" rel="stylesheet" />
   <link href="plugins/animate-css/animate.css" rel="stylesheet" />
   <link href="css/style.css" rel="stylesheet">
@@ -150,51 +191,145 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
               </h2>
             </div>
 
+            <!--TOMBOL TAMBAH DATA PENGURUS-->
             <div class="body">
               <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#pengurus">
+                  <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#tambahPengurus">
                     <i class="material-icons">add</i>
                     <span>Tambah Data</span>
                   </button>
                 </div>
+                <!--TOMBOL TAMBAH DATA PENGURUS-->
+                <!--MODAL TAMBAH DATA PENGURUS-->
+                <div class="modal fade" id="tambahPengurus" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="pengurusLabel">Form Edit Data Pengurus</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form action="" method="POST" role="form">
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">fingerprint</i>
+                            </span>
+                            <div class="form-line">
+                              <input onkeyup="this.value=this.value.toUpperCase()" type="text" class="form-control" placeholder="NIM" name="id_pengurus">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                              <input type="text" class="form-control" placeholder="Nama Pengurus" name="nama_pengurus">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                        <button type="submit" class="btn btn-link waves-effect" name="simpan">SIMPAN</button>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--END MODAL TAMBAH DATA PENGURUS-->
 
                 <!--TABEL DATA PENGURUS-->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                     <thead>
                       <tr>
-                        <th>NIM</th>
-                        <th>Nama</th>
-                        <th>Action</th>
+                        <th class="text-center">NIM</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Opsi</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $con=mysqli_connect('localhost','root','','sikati');
                       $qu=mysqli_query($con,"select * from list_pengurus");
                       while($has=mysqli_fetch_row($qu))
                       {
-                        echo "
+                        ?>
                         <tr>
-                          <td>$has[0]</td>
-                          <td>$has[1]</td>
-                          <td style='text-align:center'>
-                            <a href='#pengurus&id=$has[0]'>
-                            <span data-toggle='tooltip' data-placement='right' title='Edit'>
-                              <button class='btn btn-primary btn-xs waves-effect' data-title='Edit' data-toggle='modal' data-target='#pengurus' >
-                                <span class='material-icons md-18'>create</span>
-                              </button>
-                            <span>
-                            </a>
-                            <span data-toggle='tooltip' title='Delete'>
-                              <button onclick='datadel($has[0],&#39;list_staf_jurkes&#39;)' class='btn btn-danger btn-xs waves-effect' data-title='Delete' data-toggle='modal' data-target='#myModal' >
-                                <span class='material-icons md-18'>delete</span>
-                              </button>
-                            <span>
+                          <td><?php echo $has[0]; ?></td>
+                          <td><?php echo $has[1]; ?></td>
+                          <td td style="text-align:center">
+                            <!--TOMBOL EDIT DATA-->
+                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">
+                              <i class="material-icons">edit</i>
+                            </button>
+                            <!--MODAL EDIT DATA PENGURUS-->
+                            <div class="modal fade" id="editPengurus<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                              <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title" id="pengurusLabel">Form Tambah Data Pengurus</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="" method="POST" role="form">
+                                    <div class="col-md-12">
+                                      <div class="input-group">
+                                        <span class="input-group-addon">
+                                          <i class="material-icons">fingerprint</i>
+                                        </span>
+                                        <div class="form-line">
+                                          <input onkeyup="this.value=this.value.toUpperCase()" type="text" class="form-control" placeholder="NIM" name="id_pengurus" value="<?php echo $has[0]; ?>">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <div class="input-group">
+                                        <span class="input-group-addon">
+                                          <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                          <input type="text" class="form-control" placeholder="Nama Pengurus" name="nama_pengurus" value="<?php echo $has[1]; ?>">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                                    <button type="submit" class="btn btn-link waves-effect" name="update">UPDATE</button>
+                                  </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--END MODAL EDIT DATA PENGURUS-->
+
+                            <!--TOMBOL HAPUS DATA-->
+                            <button type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#hapusPengurus<?php echo $has[0]; ?>">
+                              <i class="material-icons">delete</i>
+                            </button>
+                            <!--MODAL HAPUS DATA PENGURUS-->
+                            <div class="modal fade" id="hapusPengurus<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                              <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <form action="" method="POST" role="form">
+                                      Apakah Anda Ingin Menghapus Data <?php echo $has[1]; ?>?
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                                    <button type="submit" class="btn btn-link waves-effect" name="hapus" value="<?php  echo $has[0]; ?>">HAPUS</button>
+                                  </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--END MODAL HAPUS DATA PENGURUS-->
                           </td>
                         </tr>
-                        ";
+                        <?php
+                        ;
                       }
                       ?>
                     </tbody>
@@ -202,68 +337,6 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
                 </div>
               </div>
               <!--END TABEL DATA PENGURUS-->
-
-              <!--MODAL PENGURUS-->
-              <div class="modal fade" id="pengurus">
-                <div class="modal-dialog modal-sm" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="pengurusLabel">Form Data Pengurus</h4>
-                    </div>
-                    <div class="modal-body">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <i class="material-icons">fingerprint</i>
-                          </span>
-                          <div class="form-line">
-                            <input type="text" class="form-control date" placeholder="NIM" name="id_pengurus" value="<?php echo isset($data[0])?$data[0]:''; ?>">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <i class="material-icons">person</i>
-                          </span>
-                          <div class="form-line">
-                            <input type="text" class="form-control date" placeholder="Nama Pengurus" name="nama_pengurus"value="<?php echo isset($data[1])?$data[1]:''; ?>">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CANCEL</button>
-                      <button type="submit" class="btn btn-link waves-effect" name="<?php echo isset($_GET['id'])?'update':'save'; ?>">SAVE</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--END MODAL PENGURUS-->
-
-              <!--PROSES TAMBAH/EDIT DATA PENGURUS-->
-              <?php
-              if(isset($_POST['save']))
-              {
-                  $getId=mysqli_fetch_row(mysqli_query($con,"select max(id) from list_pengurus"));
-                  mysqli_query($con,"insert into list_pengurus values('$ID_PENGURUS','$NAMA_PENGURUS')");
-                  echo "
-                  <script>
-                  location.assign('list_pengurus.php&ps=true1');
-                  </script>
-                  ";
-              }
-              elseif(isset($_POST['update']))
-              {
-                mysqli_query($con,"update list_pengurus set id_pengurus='$ID_PENGURUS',nama_pengurus='$NAMA_PENGURUS' where id='".$_GET['id']."'");
-                echo "
-                <script>
-                location.assign('index.php?page=list_pengurus&ps=true2');
-                </script>
-                ";
-              }
-              ?>
-              <!--END PROSES TAMBAH/EDIT DATA PENGURUS-->
 
             </div>
           </div>
@@ -273,8 +346,10 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
   </div>
 </section>
 
+<script src="plugins/jquery/jquery.js"></script>
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.js"></script>
+
 <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
 <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 <script src="plugins/bootstrap-notify/bootstrap-notify.js"></script>
