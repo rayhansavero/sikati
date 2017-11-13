@@ -1,16 +1,6 @@
 <?php
 $con = mysqli_connect('localhost','root','','sikati');
-session_start();
-if(!isset($_SESSION['NAMA_ADMIN']))
-{
-  header("location:login.php");
-}
-else
-{
-?>
-<!DOCTYPE html>
-<html>
-<?php
+
 //FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA)
 function nomor() {
   $con = mysqli_connect('localhost','root','','sikati');
@@ -36,6 +26,7 @@ function nomor() {
 		return $no_urut;
 }
 
+//SIMPAN FUNGSI nomor() KE VARIABEL $nomor
 $nomor = nomor();
 
 //PROSES TAMBAH/EDIT DATA PENGURUS
@@ -44,7 +35,7 @@ if (isset($_POST['simpan'])) {
   $query = mysqli_query($con,"insert into list_pengurus values ('$nomor','$nama')") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Tambahkan');
-  document.location='list_pengurus.php';
+  document.location='index.php?page=pengurus';
   </script>
   ";
 }
@@ -53,8 +44,8 @@ elseif (isset($_POST['update'])) {
   $nama = $_POST['nama_pengurus'];
   $query = mysqli_query($con,"update list_pengurus set id_pengurus='$id',nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
   echo "
-  <script> alert ('Data Berhasil di Update');
-  document.location='list_pengurus.php';
+  <script> alert ('Data Behasil di Update');
+  document.location='index.php?page=pengurus';
   </script>
   ";
 }
@@ -63,14 +54,13 @@ elseif (isset($_POST['hapus'])) {
   $query = mysqli_query($con,"delete from list_pengurus where id_pengurus='$id' ") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Hapus');
-  document.location='list_pengurus.php';
+  document.location='index.php?page=pengurus';
   </script>
   ";
 }
 ?>
 <!--END PROSES TAMBAH/EDIT DATA PENGURUS-->
-  <section class="content">
-    <div class="container-fluid">
+
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
@@ -151,7 +141,7 @@ elseif (isset($_POST['hapus'])) {
                           <td><?php echo $has[1]; ?></td>
                           <td td style="text-align:center">
                             <!--TOMBOL EDIT DATA-->
-                            <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">
+                            <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">
                               <i class="material-icons">edit</i>
                             </button>
                             <!--MODAL EDIT DATA PENGURUS-->
@@ -163,16 +153,9 @@ elseif (isset($_POST['hapus'])) {
                                   </div>
                                   <div class="modal-body">
                                     <form action="" method="POST" role="form">
-                                    <div class="col-md-12">
-                                      <div class="input-group">
-                                        <span class="input-group-addon">
-                                          <i class="material-icons">fingerprint</i>
-                                        </span>
-                                        <div class="form-line">
-                                          <input type="text" class="form-control" name="id_pengurus" value="<?php echo $has[0]; ?>" disabled>
-                                        </div>
-                                      </div>
-                                    </div>
+
+                                          <input type="hidden" class="form-control" name="id_pengurus" value="<?php echo $has[0]; ?>" disabled>
+
                                     <div class="col-md-12">
                                       <div class="input-group">
                                         <span class="input-group-addon">
@@ -195,7 +178,7 @@ elseif (isset($_POST['hapus'])) {
                             <!--END MODAL EDIT DATA PENGURUS-->
 
                             <!--TOMBOL HAPUS DATA-->
-                            <button type="button" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#hapusPengurus<?php echo $has[0]; ?>">
+                            <button type="button" class="btn btn-danger btn-xs waves-effect" data-toggle="modal" data-target="#hapusPengurus<?php echo $has[0]; ?>">
                               <i class="material-icons">delete</i>
                             </button>
                             <!--MODAL HAPUS DATA PENGURUS-->
@@ -231,7 +214,3 @@ elseif (isset($_POST['hapus'])) {
           </div>
         </div>
       </div>
-    </div>
-      
-</section>
-

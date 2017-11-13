@@ -1,10 +1,10 @@
-<?php
+<!--?php
 session_start();
 if(isset($_SESSION['NAMA_ADMIN'])){
-    header("location:index.php");
+    header("location:index.php?page=home");
 }else{
-?>
-
+?-->
+<?php $con = mysqli_connect('localhost','root','','sikati'); ?>
 <!DOCTYPE html>
 <html>
 
@@ -73,7 +73,7 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                             session_start();
                             $_SESSION['NAMA_ADMIN'] = $nama_admin;
                             //$_SESSION['level'] = $hasil1;
-                            header("location:index.php");
+                            header("location:index.php?page=home");
                         }else{
                             echo "gagal masuk";
                         }
@@ -94,4 +94,4 @@ if(isset($_SESSION['NAMA_ADMIN'])){
 </body>
 
 </html>
-<?php } ?>
+<!--?php } ?-->
