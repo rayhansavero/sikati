@@ -1,10 +1,15 @@
-<?php
+<!--?php
 session_start();
+<<<<<<< HEAD
 if(isset($_SESSION['LEVEL'])){
     header("location:index.php");
+=======
+if(isset($_SESSION['NAMA_ADMIN'])){
+    header("location:index.php?page=home");
+>>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
 }else{
-?>
-
+?-->
+<?php $con = mysqli_connect('localhost','root','','sikati'); ?>
 <!DOCTYPE html>
 <html>
 
@@ -73,7 +78,7 @@ if(isset($_SESSION['LEVEL'])){
                             session_start();
                             $_SESSION['LEVEL'] = $level;
                             //$_SESSION['level'] = $hasil1;
-                            header("location:index.php");
+                            header("location:index.php?page=home");
                         }else{
                             echo "gagal masuk";
                         }
@@ -94,4 +99,4 @@ if(isset($_SESSION['LEVEL'])){
 </body>
 
 </html>
-<?php } ?>
+<!--?php } ?-->
