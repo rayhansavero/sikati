@@ -2,14 +2,8 @@
 session_start();
 if(!isset($_SESSION['LEVEL'])){
     header("location:login.php");
-}else{
+}else{   
 ?>
-<!--?php
-session_start();
-require "koneksi.php";
-if(isset($_SESSION['NAMA_ADMIN'])){
-?-->
-
 
 <!DOCTYPE html>
 <html>
@@ -23,46 +17,31 @@ if(isset($_SESSION['NAMA_ADMIN'])){
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-<<<<<<< HEAD
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-=======
     <link href="font/roboto_400_700_latin_cyrillic.css" rel="stylesheet" type="text/css">
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
     <link href="font/material_icon.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-<<<<<<< HEAD
-    
-    <!-- Waves Effect Css -->
-=======
-    <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
+    <!-- Waves Effect Css -->
+    <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="plugins/node-waves/waves.css" rel="stylesheet" />
     
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
 
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
-<<<<<<< HEAD
-    
+
     <!-- JQuery DataTable Css -->
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
     
     <!-- Custom Css -->
-=======
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
-<<<<<<< HEAD
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
-=======
     <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-
->>>>>>> 4bb0f6d905121a5d20426f76ad40d1336ab28b2f
     <link href="css/style.css" rel="stylesheet">
     
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
@@ -130,37 +109,17 @@ if(isset($_SESSION['NAMA_ADMIN'])){
             <div class="menu">
                 <ul class="list">
                     <li class="header">MENU</li>
-                    <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
-                        <a href="index.php?page=home">
-                            <i class="material-icons">home</i>
-                            <span>Home</span>
-                        </a>
+                    <li><a href="index.php?page=home"><i class="material-icons">home</i><span>Home</span></a>
                     </li>
-                    <li <?php if($_GET['page']=='pengurus') {echo "class='active'";}?>>
-                        <a href="index.php?page=pengurus">
-                            <i class="material-icons">people</i>
-                            <span>List Pengurus</span>
-                        </a>
+                    <li><a href="index.php?page=pengurus"><i class="material-icons">people</i><span>List Pengurus</span></a>
                     </li>
-                    <li <?php if($_GET['page']=='kas_rutin') {echo "class='active'";}?>>
-                        <a href="index.php?page=kas_rutin">
-                            <i class="material-icons">assignment</i>
-                            <span>List Kas Rutin</span>
-                        </a>
+                    <li><a href="index.php?page=kas_rutin"><i class="material-icons">assignment</i><span>List Kas Rutin</span></a>
                     </li>
-                    <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}
-                              elseif($_GET['page']=='pasca_kegiatan') {echo "class='active'";}
-                        ?>>
-                        <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">assignment</i>
-                            <span>List Keuangan Kegiatan</span>
-                        </a>
+                    <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Keuangan Kegiatan</span></a>
                         <ul class="ml-menu">
-                            <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}?>>
-                                <a href="index.php?page=pra_kegiatan">Pra Kegiatan</a>
+                            <li><a href="index.php?page=pra_kegiatan">Pra Kegiatan</a>
                             </li>
-                            <li <?php if($_GET['page']=='pasca_kegiatan') {echo "class='active'";}?>>
-                                <a href="index.php?page=pasca_kegiatan">Pasca Kegiatan</a>
+                            <li><a href="index.php?page=pasca_kegiatan">Pasca Kegiatan</a>
                             </li>
                         </ul>
                     </li>
@@ -169,6 +128,8 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                             <i class="material-icons">update</i>
                             <span>Dari Template</span>
                         </a>
+                    </li><a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
+                    <li>
                     </li>
                 </ul>
             </div>
@@ -191,23 +152,17 @@ if(isset($_SESSION['NAMA_ADMIN'])){
 
     <section class="content">
         <div class="container-fluid">
-
-
             <?php
-            //if(isset($_GET['page'])){
-              //  $page = $_GET['page'];
-            if(!isset($_GET['page'])) {
-              include "data/dashboard.php";
-            }
-            else {
-              switch($_GET['page']) {
+            if(isset($_GET['page'])){
+                $page = $_GET['page'];
+            //if(!isset($_GET['page'])) {
+              //include "data/dashboard.php";
+            //}
+            //else {
+              switch($page) {
                 case 'home' :
                 include "data/dashboard.php";
                 break;
-              /*switch ($page){
-                case 'home':
-                include "data/dashboard.php";
-                break;*/
                 case 'pengurus':
                 include "data/list_pengurus.php";
                 break;
@@ -221,45 +176,23 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                 include "data/pasca_kegiatan.php";
                 break;
                 }
+            }else{
+              include "data/dashboard.php";
             }
-            /*else {
-              include "home.php";
-            }*/
             ?>
         </div>
     </section>
 
-<<<<<<< HEAD
-    <script text="text/javascript">
-$(function () {
-    $('.js-basic-example').DataTable({
-        responsive: true
-    });
-
-    //Exportable table
-    $('.js-exportable').DataTable({
-        dom: 'Bfrtip',
-        responsive: true,
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-});
-</script>
     <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
-=======
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
-
-
-    <!--script src="plugins/jquery/jquery.js"></script>
+    <script src="plugins/jquery/jquery.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
     <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
     <script src="js/pages/ui/modals.js"></script>
-    <script src="js/demo.js"></script-->
+    <script src="js/demo.js"></script>
 
-    <--script src="plugins/jquery/jquery.js"></script>
+    <script src="plugins/jquery/jquery.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
 
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -267,7 +200,6 @@ $(function () {
 
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
     <script src="plugins/node-waves/waves.js"></script>
-<<<<<<< HEAD
     
     <!-- Jquery DataTable Plugin Js -->
     <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
@@ -281,10 +213,9 @@ $(function () {
     <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
     
     <!-- Jquery CountTo Plugin Js -->
-=======
+<!--=======-->
 
     <!--JS UNTUK HALAMAN DASHBOARD-->
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
     <script src="plugins/jquery-countto/jquery.countTo.js"></script>
     <script src="plugins/raphael/raphael.min.js"></script>
     <script src="plugins/morrisjs/morris.js"></script>
@@ -309,10 +240,6 @@ $(function () {
 
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
-<<<<<<< HEAD
-    <script src="js/pages/index.js"></script>
-=======
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
     <script src="js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Demo Js -->
@@ -321,17 +248,5 @@ $(function () {
 </body>
 
 </html>
+
 <?php } ?>
-<!--?php }
-else {
-  echo "<script language=\"javascript\">\n";
-	echo "alert(\"Anda Harus Log in!!\")\n";
-	echo "window.location=\"login.php\" ";
-	echo "</script>";}
-  /*echo "
-  <script> alert ('Anda Harus Login!');
-  window.location='login.php';
-  </script>
-  ";
-}*/
-?-->

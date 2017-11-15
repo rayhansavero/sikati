@@ -1,15 +1,10 @@
-<!--?php
+<?php
 session_start();
-<<<<<<< HEAD
 if(isset($_SESSION['LEVEL'])){
-    header("location:index.php");
-=======
-if(isset($_SESSION['NAMA_ADMIN'])){
-    header("location:index.php?page=home");
->>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
-}else{
-?-->
-<?php $con = mysqli_connect('localhost','root','','sikati'); ?>
+   header("location:index.php");
+}else{    
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -44,7 +39,7 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="ID_ADMIN" placeholder="Id Admin" required autofocus>
+                            <input type="text" class="form-control" name="level" placeholder="level" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -52,7 +47,7 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="PASSWORD" placeholder="Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="row">
@@ -67,20 +62,19 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                 </form>
 
                 <?php
-                    $con=mysqli_connect('localhost','root','','sikati');
-                    if (isset($_POST['signin'])){
-                        $cek = mysqli_query($con, "SELECT * FROM list_admin WHERE ID_ADMIN = '".$_POST['ID_ADMIN']."' AND PASSWORD = '".$_POST['PASSWORD']."' ");
+                    include "koneksi.php";
+                    if(isset($_POST['signin'])){
+                       $cek = mysqli_query($conn, "SELECT * FROM list_admin WHERE LEVEL = '".$_POST['level']."' AND PASSWORD = '".$_POST['password']."'"); 
                         $hasil = mysqli_fetch_array($cek);
                         $count = mysqli_num_rows($cek);
                         $level = $hasil['LEVEL'];
-
                         if($count > 0){
-                            session_start();
+                            session_start();//session untuk keamanan login
                             $_SESSION['LEVEL'] = $level;
-                            //$_SESSION['level'] = $hasil1;
-                            header("location:index.php?page=home");
+                            
+                            header("location:index.php");
                         }else{
-                            echo "gagal masuk";
+                            echo "GAGAL MASUK";
                         }
                     }
                 ?>
@@ -99,4 +93,4 @@ if(isset($_SESSION['NAMA_ADMIN'])){
 </body>
 
 </html>
-<!--?php } ?-->
+<?php } ?>
