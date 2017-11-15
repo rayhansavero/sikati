@@ -32,7 +32,8 @@ $nomor = nomor();
 //PROSES TAMBAH/EDIT DATA PENGURUS
 if (isset($_POST['simpan'])) {
   $nama = $_POST['nama_pengurus'];
-  $query = mysqli_query($con,"insert into list_pengurus values ('$nomor','$nama')") or die(mysql_error());
+  $periode = $_POST['periode'];
+  $query = mysqli_query($con,"insert into list_pengurus values ('$nomor','$nama','$periode')") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Tambahkan');
   document.location='index.php?page=pengurus';
@@ -40,7 +41,7 @@ if (isset($_POST['simpan'])) {
   ";
 }
 elseif (isset($_POST['update'])) {
-  $id = $_POST['id_pengurus'];
+  $id = $_POST['update'];
   $nama = $_POST['nama_pengurus'];
   $query = mysqli_query($con,"update list_pengurus set id_pengurus='$id',nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
   echo "
@@ -61,12 +62,41 @@ elseif (isset($_POST['hapus'])) {
 ?>
 <!--END PROSES TAMBAH/EDIT DATA PENGURUS-->
 
+      <!--PILIH PERIODE KEPENGURUSAN-->
+      <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="card">
+            <div class="header">
+                <h2>Pilih Tahun Kepengurusan</h2>
+            </div>
+            <div class="body">
+              <div class="row clearfix">
+                <div class="col-sm-3">
+                  <select class="form-control show-tick">
+                    <option value="">-- Please select --</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <button type="button" class="btn btn-primary waves-effect m-r-20">Tampil</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--END PILIH PERIODE KEPENGURUSAN-->
+
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="card">
             <div class="header">
               <h2>
-                Daftar Pengurus HMJ TI
+                Daftar Pengurus HMJ TI Periode
               </h2>
             </div>
 
@@ -109,6 +139,21 @@ elseif (isset($_POST['hapus'])) {
                             </div>
                           </div>
                         </div>
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">date_range</i>
+                            </span>
+                            <select class="form-control show-tick" name="periode">
+                              <option value="">Periode Kepengurusan</option>
+                              <option value="2017">2017</option>
+                              <option value="2018">2018</option>
+                              <option value="2019">2019</option>
+                              <option value="2020">2020</option>
+                              <option value="2021">2021</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
@@ -127,7 +172,8 @@ elseif (isset($_POST['hapus'])) {
                       <tr>
                         <th class="text-center">Id</th>
                         <th class="text-center">Nama</th>
-                        <th class="text-center">Opsi</th>
+                        <th class="text-center">Periode</th>
+                        <th class="text-center">Opsi</th>                        
                       </tr>
                     </thead>
                     <tbody>
@@ -139,6 +185,7 @@ elseif (isset($_POST['hapus'])) {
                         <tr>
                           <td><?php echo $has[0]; ?></td>
                           <td><?php echo $has[1]; ?></td>
+                          <td><?php echo $has[2]; ?></td>
                           <td td style="text-align:center">
                             <!--TOMBOL EDIT DATA-->
                             <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">

@@ -57,7 +57,12 @@ if(isset($_SESSION['NAMA_ADMIN'])){
 =======
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
+<<<<<<< HEAD
 >>>>>>> ae4b336c40c6192b42046fb976a556128beba5e1
+=======
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+>>>>>>> 4bb0f6d905121a5d20426f76ad40d1336ab28b2f
     <link href="css/style.css" rel="stylesheet">
     
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
