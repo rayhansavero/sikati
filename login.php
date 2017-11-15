@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['NAMA_ADMIN'])){
+if(isset($_SESSION['LEVEL'])){
     header("location:index.php");
 }else{
 ?>
@@ -67,11 +67,11 @@ if(isset($_SESSION['NAMA_ADMIN'])){
                         $cek = mysqli_query($con, "SELECT * FROM list_admin WHERE ID_ADMIN = '".$_POST['ID_ADMIN']."' AND PASSWORD = '".$_POST['PASSWORD']."' ");
                         $hasil = mysqli_fetch_array($cek);
                         $count = mysqli_num_rows($cek);
-                        $nama_admin = $hasil['NAMA_ADMIN'];
+                        $level = $hasil['LEVEL'];
 
                         if($count > 0){
                             session_start();
-                            $_SESSION['NAMA_ADMIN'] = $nama_admin;
+                            $_SESSION['LEVEL'] = $level;
                             //$_SESSION['level'] = $hasil1;
                             header("location:index.php");
                         }else{

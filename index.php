@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['NAMA_ADMIN'])){
+if(!isset($_SESSION['LEVEL'])){
     header("location:login.php");
 }else{
 ?>
@@ -14,17 +14,33 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Admin Dashboard | Sikati</title>
-
+    
+    <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="font/material_icon.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
+    <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    
+    <!-- Waves Effect Css -->
     <link href="plugins/node-waves/waves.css" rel="stylesheet" />
+    
+    <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
+    
+    <!-- JQuery DataTable Css -->
+    <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+    
+    <!-- Custom Css -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
@@ -70,7 +86,7 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
                     <img src="images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['NAMA_ADMIN'] ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['LEVEL'] ?></div>
                     <div class="email"></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
@@ -180,6 +196,22 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
         </div>
     </section>
 
+    <script text="text/javascript">
+$(function () {
+    $('.js-basic-example').DataTable({
+        responsive: true
+    });
+
+    //Exportable table
+    $('.js-exportable').DataTable({
+        dom: 'Bfrtip',
+        responsive: true,
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+});
+</script>
     <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
 
@@ -194,7 +226,18 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-
+    
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+    
     <!-- Jquery CountTo Plugin Js -->
     <script src="plugins/jquery-countto/jquery.countTo.js"></script>
 
@@ -218,6 +261,7 @@ if(!isset($_SESSION['NAMA_ADMIN'])){
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
     <script src="js/pages/index.js"></script>
+    <script src="js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
