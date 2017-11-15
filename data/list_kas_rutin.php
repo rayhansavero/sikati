@@ -26,11 +26,9 @@ $con = mysqli_connect('localhost','root','','sikati');
             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
               <thead>
                 <tr>
-                  <th class="text-center">Id</th>
                   <th class="text-center">Nama</th>
-                  <th class="text-center">Jumlah Bayar</th>
-                  <th class="text-center">Tanggal</th>
-                  <th class="text-center">Opsi</th>
+                  <th class="text-center">Total Pembayaran</th>
+                  <th class="text-center">Detail Pembayaran</th>
                 </tr>
               </thead>
               <tbody>
@@ -40,19 +38,51 @@ $con = mysqli_connect('localhost','root','','sikati');
                 {
                   ?>
                   <tr>
-                    <td><?php echo $has[0]; ?></td>
                     <td><?php echo $has[1]; ?></td>
-                    <td><?php echo $has[2]; ?></td>
                     <td><?php echo $has[3]; ?></td>
                     <td td style="text-align:center">
-                      <!--TOMBOL EDIT DATA-->
-                      <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editKR<?php echo $has[0]; ?>">
-                        <i class="material-icons">edit</i>
+                      <!--TOMBOL DETAIL DATA-->
+                      <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has[1]; ?>">
+                        <i class="material-icons">description</i>
                       </button>
-                      <!--TOMBOL HAPUS DATA-->
-                      <button type="button" class="btn btn-danger btn-xs waves-effect" data-toggle="modal" data-target="#hapusKR<?php echo $has[0]; ?>">
-                        <i class="material-icons">delete</i>
-                      </button>
+                      <!--MODAL DETAIL DATA-->
+                      <div class="modal fade" id="detailKR<?php echo $has[1]; ?>" tabindex="-1" role="dialog">
+                        <div class="modal-dialog " role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Detail Pembayaran <?php echo $has[1]; ?></h4>
+                            </div>
+                            <div class="modal-body">
+                              <!--form action="" method="POST" role="form"-->
+                              <div class="col-md-6">
+                                <div class="input-group">
+                                  <span class="input-group-addon">
+                                    <i class="material-icons">fingerprint</i>
+                                  </span>
+                                  <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="" name="" value="<?php echo $has[2]; ?>">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="input-group">
+                                  <span class="input-group-addon">
+                                    <i class="material-icons">fingerprint</i>
+                                  </span>
+                                  <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="" name="" value="<?php echo $has[3]; ?>">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                            <!--/form-->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--END MODAL EDIT DATA PENGURUS-->
                     </td>
                   </tr>
                   <?php

@@ -34,6 +34,8 @@ if(isset($_SESSION['NAMA_ADMIN'])){
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
     <link href="css/style.css" rel="stylesheet">
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
