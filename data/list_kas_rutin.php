@@ -1,7 +1,7 @@
 <?php
 $con = mysqli_connect('localhost','root','','sikati');
 ?>
-<!-- Exportable Table -->
+
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
@@ -39,7 +39,7 @@ $con = mysqli_connect('localhost','root','','sikati');
                   ?>
                   <tr>
                     <td><?php echo $has[1]; ?></td>
-                    <td><?php echo $has[3]; ?></td>
+                    <td>Rp <?php echo $has[3]; ?></td>
                     <td td style="text-align:center">
                       <!--TOMBOL DETAIL DATA-->
                       <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has[1]; ?>">
@@ -57,26 +57,26 @@ $con = mysqli_connect('localhost','root','','sikati');
                               <div class="col-md-6">
                                 <div class="input-group">
                                   <span class="input-group-addon">
-                                    <i class="material-icons">fingerprint</i>
+                                    <i class="material-icons">date_range</i>
                                   </span>
                                   <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="" name="" value="<?php echo $has[2]; ?>">
+                                    <input type="text" class="form-control" name="tanggal" value="<?php echo $has[2]; ?>">
                                   </div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="input-group">
                                   <span class="input-group-addon">
-                                    <i class="material-icons">fingerprint</i>
+                                    <i class="material-icons">attach_money</i>
                                   </span>
                                   <div class="form-line">
-                                    <input type="text" class="form-control" placeholder="" name="" value="<?php echo $has[3]; ?>">
+                                    <input type="text" class="form-control" name="bayar" value="Rp <?php echo $has[3]; ?>">
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                              <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">TUTUP</button>
                             <!--/form-->
                             </div>
                           </div>
@@ -100,4 +100,3 @@ $con = mysqli_connect('localhost','root','','sikati');
     </div>
   </div>
 </div>
-            <!-- #END# Exportable Table -->

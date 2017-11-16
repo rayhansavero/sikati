@@ -70,10 +70,10 @@ elseif (isset($_POST['hapus'])) {
                 <h2>Pilih Tahun Kepengurusan</h2>
             </div>
             <div class="body">
+              <form action="" method="POST" role="form">
               <div class="row clearfix">
                 <div class="col-sm-3">
-                  <select class="form-control show-tick">
-                    <option value="">-- Please select --</option>
+                  <select class="form-control show-tick">                    
                     <option value="2017">2017</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
@@ -83,6 +83,7 @@ elseif (isset($_POST['hapus'])) {
                 </div>
                 <div class="col-sm-3">
                   <button type="button" class="btn btn-primary waves-effect m-r-20">Tampil</button>
+                </form>
                 </div>
               </div>
             </div>
@@ -173,7 +174,7 @@ elseif (isset($_POST['hapus'])) {
                         <th class="text-center">Id</th>
                         <th class="text-center">Nama</th>
                         <th class="text-center">Periode</th>
-                        <th class="text-center">Opsi</th>                        
+                        <th class="text-center">Opsi</th>
                       </tr>
                     </thead>
                     <tbody>
