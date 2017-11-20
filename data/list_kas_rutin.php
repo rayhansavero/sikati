@@ -82,7 +82,7 @@ $nomor = nomor();
                       <span class="input-group-addon">
                         <i class="material-icons">work</i>
                       </span>
-                      <select class="form-control show-tick" id="periode_pengurusan" name="periode_pengurusan">
+                      <select class="form-control show-tick" id="periode_pengurusan" name="periode_pengurusan" onchange="listpengurus()">
                         <option value="">Pilih Periode</option>
                         <?php
                             $query = mysqli_query($con, "SELECT * FROM th_pengurusan ORDER BY TAHUN");
@@ -105,19 +105,21 @@ $nomor = nomor();
                       <span class="input-group-addon">
                         <i class="material-icons">person</i>
                       </span>
-                      <select class="form-control show-tick" id="nama_pengurus" name="nama_pengurus">
-                        <option value="">Pilih Pengurus</option>
-                        <?php
-                        $query = mysqli_query($con, "SELECT * FROM list_pengurus INNER JOIN th_pengurusan ON list_pengurus.T_ID_fk = th_pengurusan.T_ID ORDER BY NAMA_PENGURUS");
-                          while ($row = mysqli_fetch_array($query)) {
-                              ?>
-                          <option id="nama_pengurus" class="<?php echo $row['T_ID']; ?>" value="<?php echo $row['ID_PENGURUS']; ?>">
-                          <?php echo $row['NAMA_PENGURUS']; ?>
-                          </option>
-                          <?php
-                          }
-                          ?>
-                      </select>
+                        <div id="result_pengurus">
+                              <select class="form-control show-tick nama_pengurus" id="nama_pengurus" name="nama_pengurus">
+                                <option value="">Pilih Pengurus</option>
+                                <?php
+                                $query = mysqli_query($con, "SELECT * FROM list_pengurus INNER JOIN th_pengurusan ON list_pengurus.T_ID_fk = th_pengurusan.T_ID ORDER BY NAMA_PENGURUS");
+                                  while ($row = mysqli_fetch_array($query)) {
+                                      ?>
+                                  <option value="<?php echo $row['ID_PENGURUS']; ?>">
+                                  <?php echo $row['NAMA_PENGURUS']; ?>
+                                  </option>
+                                  <?php
+                                  }
+                                  ?>
+                              </select>
+                        </div>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -236,9 +238,19 @@ $nomor = nomor();
               </tbody>
             </table>
               <script src="js/jquery.chained.min.js"></script>
-              <script>$("#list_pengurus").chained("#th_pengurusan");
+              <script>//$("#list_pengurus").chained("#th_pengurusan");
+              function listpengurus(){
+                  $.ajax({
+                      url: 'data/ajax.php?tahun='+document.getElementById('periode_pengurusan').value,
+                      success: function(data) {
+                          //$('.nama_pengurus').html(data);
+                          $('#result_pengurus').html(data);
+                      }
+                });
+                  
+                  //alert('tes');
+              }
               
-               
               </script>
           </div>
         </div>
