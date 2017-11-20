@@ -64,7 +64,7 @@ if(isset($_SESSION['LEVEL'])){
                 <?php
                     include "koneksi.php";
                     if(isset($_POST['signin'])){
-                       $cek = mysqli_query($conn, "SELECT * FROM list_admin WHERE LEVEL = '".$_POST['level']."' AND PASSWORD = '".$_POST['password']."'");
+                       $cek = mysqli_query($con, "SELECT * FROM list_admin WHERE LEVEL = '".$_POST['level']."' AND PASSWORD = '".$_POST['password']."'");
                         $hasil = mysqli_fetch_array($cek);
                         $count = mysqli_num_rows($cek);
                         $level = $hasil['LEVEL'];

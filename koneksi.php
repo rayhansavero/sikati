@@ -1,6 +1,6 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'sikati');
-if(!$conn){
+$con = mysqli_connect('localhost', 'root', '', 'sikati');
+if(!$con){
     echo 'gagal terhubung ke db';
 }
 ?>

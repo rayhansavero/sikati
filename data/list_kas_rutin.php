@@ -63,7 +63,8 @@ $nomor = nomor();
               <span>Tambah Data</span>
             </button>
           </div>
-
+            
+<!--===================================================================================================================-->
           <!--MODAL TAMBAH KR-->
           <div class="modal fade" id="tambahKas" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm" role="document">
@@ -73,6 +74,52 @@ $nomor = nomor();
                 </div>
                 <div class="modal-body">
                   <form action="" method="POST" role="form">
+                      
+                      <!--PERIODE PENGURUSAN-->
+                    <div class="col-md-12">
+                    <b>Periode Pengurusan</b>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">work</i>
+                      </span>
+                      <select class="form-control show-tick" id="periode_pengurusan" name="periode_pengurusan">
+                        <option value="">Pilih Periode</option>
+                        <?php
+                            $query = mysqli_query($con, "SELECT * FROM th_pengurusan ORDER BY TAHUN");
+                            while ($row = mysqli_fetch_array($query)) {
+                                ?>
+                          <option value="<?php echo $row['T_ID']; ?>">
+                            <?php echo $row['TAHUN']; ?>
+                          </option>
+                          <?php
+                            }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                      
+                      <!--NAMA PENGURUS-->
+                      <div class="col-md-12">
+                    <b>Nama Pengurus</b>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">person</i>
+                      </span>
+                      <select class="form-control show-tick" id="nama_pengurus" name="nama_pengurus">
+                        <option value="">Pilih Pengurus</option>
+                        <?php
+                        $query = mysqli_query($con, "SELECT * FROM list_pengurus INNER JOIN th_pengurusan ON list_pengurus.T_ID_fk = th_pengurusan.T_ID ORDER BY NAMA_PENGURUS");
+                          while ($row = mysqli_fetch_array($query)) {
+                              ?>
+                          <option id="nama_pengurus" class="<?php echo $row['T_ID']; ?>" value="<?php echo $row['ID_PENGURUS']; ?>">
+                          <?php echo $row['NAMA_PENGURUS']; ?>
+                          </option>
+                          <?php
+                          }
+                          ?>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-md-12">
                     <b>ID Kas</b>
                     <div class="input-group">
@@ -93,22 +140,6 @@ $nomor = nomor();
                       <div class="form-line">
                         <input type="text" class="form-control" name="tanggal" value="<?php echo isset($_GET['id_kas'])?$data[2]:date('d-m-Y'); ?>" disabled>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <b>Nama Pengurus</b>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="material-icons">person</i>
-                      </span>
-                      <select class="form-control show-tick" name="id_pengurus">
-                        <option value="">Pilih Pengurus</option>
-                        <?php
-                        $qu = mysqli_query($con,"select id_pengurus from list_pengurus");
-                        while ($has = mysqli_fetch_row($qu)) { ?>
-                        <option value="<?php echo $has[0]; ?>"><?php echo $has[0]; ?></option>
-                      <?php }; ?>
-                      </select>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -204,6 +235,11 @@ $nomor = nomor();
                 ?>
               </tbody>
             </table>
+              <script src="js/jquery.chained.min.js"></script>
+              <script>$("#list_pengurus").chained("#th_pengurusan");
+              
+               
+              </script>
           </div>
         </div>
         <!--END TABEL DATA KR-->

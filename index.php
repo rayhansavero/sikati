@@ -240,7 +240,9 @@ if(!isset($_SESSION['LEVEL'])){
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
-
+    
+    <script src="js/jquery.chained.min.js"></script>
+    <script>$("#list_pengurus").chained("#th_pengurusan");</script>
 </body>
 
 </html>
