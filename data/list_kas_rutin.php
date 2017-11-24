@@ -122,6 +122,8 @@ $nomor = nomor();
                         </div>
                     </div>
                   </div>
+                      
+                <!--ID KAS-->
                   <div class="col-md-12">
                     <b>ID Kas</b>
                     <div class="input-group">
@@ -129,10 +131,12 @@ $nomor = nomor();
                         <i class="material-icons">fingerprint</i>
                       </span>
                       <div class="form-line">
-                        <input type="text" class="form-control" name="id_kas" value="<?php echo $nomor; ?>" disabled>
+                        <input type="text" class="form-control" name="id_kas" value="<?php echo $nomor; ?>">
                       </div>
                     </div>
                   </div>
+                      
+                <!--TANGGAL BAYAR-->
                   <div class="col-md-12">
                     <b>Tanggal Bayar</b>
                     <div class="input-group">
@@ -144,6 +148,8 @@ $nomor = nomor();
                       </div>
                     </div>
                   </div>
+                      
+                <!--JUMLAH BAYAR-->
                   <div class="col-md-12">
                     <b>Jumlah Bayar</b>
                     <div class="input-group">
@@ -156,10 +162,12 @@ $nomor = nomor();
                     </div>
                   </div>
                 </div>
+                    
                 <div class="modal-footer">
                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
                   <button type="submit" class="btn btn-link waves-effect" name="simpan">SIMPAN</button>
                 </form>
+                    
                 </div>
               </div>
             </div>

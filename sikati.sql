@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2017 at 01:35 PM
+-- Generation Time: Nov 24, 2017 at 11:43 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -19,6 +19,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `sikati`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bayar_kas`
+--
+
+CREATE TABLE IF NOT EXISTS `bayar_kas` (
+  `id_kas` varchar(4) NOT NULL,
+  `id_pengurus` varchar(4) NOT NULL,
+  `id_tahun` varchar(4) NOT NULL,
+  `tgl_bayar_kas` date NOT NULL,
+  `jumlah_bayar_kas` varchar(8) NOT NULL,
+  `saldo_kas` varchar(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kegiatan`
+--
+
+CREATE TABLE IF NOT EXISTS `kegiatan` (
+  `id_kegiatan` varchar(4) NOT NULL,
+  `nama_kegiatan` varchar(20) NOT NULL,
+  `tgl_kegiatan` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -42,105 +69,85 @@ INSERT INTO `list_admin` (`ID_ADMIN`, `LEVEL`, `PASSWORD`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list_data_kegiatan`
---
-
-CREATE TABLE IF NOT EXISTS `list_data_kegiatan` (
-  `ID_DATA` varchar(4) NOT NULL,
-  `ID_JUDUL` varchar(3) DEFAULT NULL,
-  `ID_MASTER` varchar(4) DEFAULT NULL,
-  `URAIAN` varchar(30) DEFAULT NULL,
-  `DEBIT_KGT` varchar(8) DEFAULT NULL,
-  `KREDIT_KGT` varchar(8) DEFAULT NULL,
-  `JUMLAH` varchar(8) DEFAULT NULL,
-  `TANGGAL` date DEFAULT NULL,
-  `KETERANGAN` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `list_judul_kegiatan`
---
-
-CREATE TABLE IF NOT EXISTS `list_judul_kegiatan` (
-  `ID_JUDUL` varchar(3) NOT NULL,
-  `JUDUL_KEGIATAN` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `list_kas_rutin`
---
-
-CREATE TABLE IF NOT EXISTS `list_kas_rutin` (
-  `ID_KAS` varchar(4) NOT NULL,
-  `ID_PENGURUS` varchar(3) DEFAULT NULL,
-  `ID_MASTER` varchar(4) DEFAULT NULL,
-  `TGL` date DEFAULT NULL,
-  `JUMLAH` varchar(8) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `list_pengurus`
---
-
-CREATE TABLE IF NOT EXISTS `list_pengurus` (
-  `ID_PENGURUS` varchar(3) NOT NULL,
-  `NAMA_PENGURUS` varchar(30) DEFAULT NULL,
-  `T_ID_fk` varchar(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `list_pengurus`
---
-
-INSERT INTO `list_pengurus` (`ID_PENGURUS`, `NAMA_PENGURUS`, `T_ID_fk`) VALUES
-('e12', 'aaa', 'th1'),
-('e45', 'bbb', 'th2'),
-('e67', 'ccc', 'th2');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `master`
 --
 
 CREATE TABLE IF NOT EXISTS `master` (
-  `ID_MASTER` varchar(4) NOT NULL,
-  `TGL` date DEFAULT NULL,
-  `DEBET_MS` varchar(8) DEFAULT NULL,
-  `KREDIT_MS` varchar(8) DEFAULT NULL,
-  `KET_MS` varchar(50) DEFAULT NULL,
-  `SALDO_MS` varchar(8) DEFAULT NULL
+  `id_master` varchar(4) NOT NULL,
+  `tgl_master` date NOT NULL,
+  `debit_master` varchar(8) NOT NULL,
+  `kredit_master` varchar(8) NOT NULL,
+  `saldo_master` varchar(8) NOT NULL,
+  `ket_master` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `th_pengurusan`
+-- Table structure for table `panitia_kegiatan`
 --
 
-CREATE TABLE IF NOT EXISTS `th_pengurusan` (
-  `T_ID` varchar(3) NOT NULL,
-  `TAHUN` year(4) NOT NULL
+CREATE TABLE IF NOT EXISTS `panitia_kegiatan` (
+  `id_panitia` varchar(4) NOT NULL,
+  `id_pengurus` varchar(4) NOT NULL,
+  `id_kegiatan` varchar(4) NOT NULL,
+  `nama_panitia` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `th_pengurusan`
+-- Table structure for table `pengurus`
 --
 
-INSERT INTO `th_pengurusan` (`T_ID`, `TAHUN`) VALUES
-('th1', 2016),
-('th2', 2017),
-('th3', 2018);
+CREATE TABLE IF NOT EXISTS `pengurus` (
+  `id_pengurus` varchar(4) NOT NULL,
+  `nama_pengurus` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `proses_kegiatan`
+--
+
+CREATE TABLE IF NOT EXISTS `proses_kegiatan` (
+  `id_proses` varchar(4) NOT NULL,
+  `id_panitia` varchar(4) NOT NULL,
+  `id_kegiatan` varchar(4) NOT NULL,
+  `debit_proses` varchar(8) NOT NULL,
+  `saldo_proses` varchar(8) NOT NULL,
+  `tgl_proses` date NOT NULL,
+  `kredit_proses` varchar(8) NOT NULL,
+  `ket_proses` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tahun`
+--
+
+CREATE TABLE IF NOT EXISTS `tahun` (
+  `id_tahun` varchar(4) NOT NULL,
+  `tahun` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bayar_kas`
+--
+ALTER TABLE `bayar_kas`
+ ADD PRIMARY KEY (`id_kas`), ADD KEY `id_pengurus` (`id_pengurus`), ADD KEY `id_tahun` (`id_tahun`);
+
+--
+-- Indexes for table `kegiatan`
+--
+ALTER TABLE `kegiatan`
+ ADD PRIMARY KEY (`id_kegiatan`);
 
 --
 -- Indexes for table `list_admin`
@@ -149,58 +156,59 @@ ALTER TABLE `list_admin`
  ADD PRIMARY KEY (`ID_ADMIN`);
 
 --
--- Indexes for table `list_data_kegiatan`
---
-ALTER TABLE `list_data_kegiatan`
- ADD PRIMARY KEY (`ID_DATA`), ADD KEY `FK_DEBET_DAN_KREDIT` (`ID_MASTER`), ADD KEY `FK_MEMILIKI` (`ID_JUDUL`);
-
---
--- Indexes for table `list_judul_kegiatan`
---
-ALTER TABLE `list_judul_kegiatan`
- ADD PRIMARY KEY (`ID_JUDUL`);
-
---
--- Indexes for table `list_kas_rutin`
---
-ALTER TABLE `list_kas_rutin`
- ADD PRIMARY KEY (`ID_KAS`), ADD KEY `FK_DEBET` (`ID_MASTER`), ADD KEY `FK_MEMBAYAR` (`ID_PENGURUS`);
-
---
--- Indexes for table `list_pengurus`
---
-ALTER TABLE `list_pengurus`
- ADD PRIMARY KEY (`ID_PENGURUS`);
-
---
 -- Indexes for table `master`
 --
 ALTER TABLE `master`
- ADD PRIMARY KEY (`ID_MASTER`);
+ ADD PRIMARY KEY (`id_master`);
 
 --
--- Indexes for table `th_pengurusan`
+-- Indexes for table `panitia_kegiatan`
 --
-ALTER TABLE `th_pengurusan`
- ADD PRIMARY KEY (`T_ID`);
+ALTER TABLE `panitia_kegiatan`
+ ADD PRIMARY KEY (`id_panitia`), ADD KEY `id_pengurus` (`id_pengurus`), ADD KEY `id_kegiatan` (`id_kegiatan`);
+
+--
+-- Indexes for table `pengurus`
+--
+ALTER TABLE `pengurus`
+ ADD PRIMARY KEY (`id_pengurus`);
+
+--
+-- Indexes for table `proses_kegiatan`
+--
+ALTER TABLE `proses_kegiatan`
+ ADD PRIMARY KEY (`id_proses`), ADD KEY `id_panitia` (`id_panitia`), ADD KEY `id_kegiatan` (`id_kegiatan`);
+
+--
+-- Indexes for table `tahun`
+--
+ALTER TABLE `tahun`
+ ADD PRIMARY KEY (`id_tahun`);
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `list_data_kegiatan`
+-- Constraints for table `bayar_kas`
 --
-ALTER TABLE `list_data_kegiatan`
-ADD CONSTRAINT `FK_DEBET_DAN_KREDIT` FOREIGN KEY (`ID_MASTER`) REFERENCES `master` (`ID_MASTER`),
-ADD CONSTRAINT `FK_MEMILIKI` FOREIGN KEY (`ID_JUDUL`) REFERENCES `list_judul_kegiatan` (`ID_JUDUL`);
+ALTER TABLE `bayar_kas`
+ADD CONSTRAINT `bayar_kas_ibfk_1` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `bayar_kas_ibfk_2` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `list_kas_rutin`
+-- Constraints for table `panitia_kegiatan`
 --
-ALTER TABLE `list_kas_rutin`
-ADD CONSTRAINT `FK_DEBET` FOREIGN KEY (`ID_MASTER`) REFERENCES `master` (`ID_MASTER`),
-ADD CONSTRAINT `FK_MEMBAYAR` FOREIGN KEY (`ID_PENGURUS`) REFERENCES `list_pengurus` (`ID_PENGURUS`);
+ALTER TABLE `panitia_kegiatan`
+ADD CONSTRAINT `panitia_kegiatan_ibfk_1` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `panitia_kegiatan_ibfk_2` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `proses_kegiatan`
+--
+ALTER TABLE `proses_kegiatan`
+ADD CONSTRAINT `proses_kegiatan_ibfk_1` FOREIGN KEY (`id_panitia`) REFERENCES `panitia_kegiatan` (`id_panitia`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `proses_kegiatan_ibfk_2` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
