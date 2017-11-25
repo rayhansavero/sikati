@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2017 at 11:43 PM
+-- Generation Time: Nov 25, 2017 at 03:13 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -34,6 +34,13 @@ CREATE TABLE IF NOT EXISTS `bayar_kas` (
   `jumlah_bayar_kas` varchar(8) NOT NULL,
   `saldo_kas` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bayar_kas`
+--
+
+INSERT INTO `bayar_kas` (`id_kas`, `id_pengurus`, `id_tahun`, `tgl_bayar_kas`, `jumlah_bayar_kas`, `saldo_kas`) VALUES
+('K001', 'e003', 'th2', '2017-11-25', '2000', '');
 
 -- --------------------------------------------------------
 
@@ -102,8 +109,21 @@ CREATE TABLE IF NOT EXISTS `panitia_kegiatan` (
 
 CREATE TABLE IF NOT EXISTS `pengurus` (
   `id_pengurus` varchar(4) NOT NULL,
-  `nama_pengurus` varchar(20) NOT NULL
+  `nama_pengurus` varchar(20) NOT NULL,
+  `id_tahun` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengurus`
+--
+
+INSERT INTO `pengurus` (`id_pengurus`, `nama_pengurus`, `id_tahun`) VALUES
+('e001', 'aaa', 'th1'),
+('e002', 'bbb', 'th1'),
+('e003', 'ccc', 'th2'),
+('e004', 'ddd', 'th2'),
+('e005', 'eee', 'th3'),
+('e006', 'fff', 'th3');
 
 -- --------------------------------------------------------
 
@@ -130,8 +150,17 @@ CREATE TABLE IF NOT EXISTS `proses_kegiatan` (
 
 CREATE TABLE IF NOT EXISTS `tahun` (
   `id_tahun` varchar(4) NOT NULL,
-  `tahun` year(4) NOT NULL
+  `pilih_tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tahun`
+--
+
+INSERT INTO `tahun` (`id_tahun`, `pilih_tahun`) VALUES
+('th1', 2015),
+('th2', 2016),
+('th3', 2017);
 
 --
 -- Indexes for dumped tables
@@ -171,7 +200,7 @@ ALTER TABLE `panitia_kegiatan`
 -- Indexes for table `pengurus`
 --
 ALTER TABLE `pengurus`
- ADD PRIMARY KEY (`id_pengurus`);
+ ADD PRIMARY KEY (`id_pengurus`), ADD KEY `id_tahun` (`id_tahun`);
 
 --
 -- Indexes for table `proses_kegiatan`
@@ -202,6 +231,12 @@ ADD CONSTRAINT `bayar_kas_ibfk_2` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`
 ALTER TABLE `panitia_kegiatan`
 ADD CONSTRAINT `panitia_kegiatan_ibfk_1` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `panitia_kegiatan_ibfk_2` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pengurus`
+--
+ALTER TABLE `pengurus`
+ADD CONSTRAINT `pengurus_ibfk_1` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `proses_kegiatan`

@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 function nomor() {
   $con = mysqli_connect('localhost','root','','sikati');
-  $query = mysqli_query($con,"select id_kas from list_kas_rutin order by id_kas desc limit 0,1") or die(mysql_error());
+  $query = mysqli_query($con,"select id_kas from bayar_kas order by id_kas desc limit 0,1") or die(mysql_error());
 	list ($no_temp) = mysqli_fetch_row($query);
 
 	if ($no_temp == '') {
@@ -85,11 +85,11 @@ $nomor = nomor();
                       <select class="form-control show-tick" id="periode_pengurusan" name="periode_pengurusan" onchange="listpengurus()">
                         <option value="">Pilih Periode</option>
                         <?php
-                            $query = mysqli_query($con, "SELECT * FROM th_pengurusan ORDER BY TAHUN");
+                            $query = mysqli_query($con, "SELECT * FROM tahun ORDER BY pilih_tahun");
                             while ($row = mysqli_fetch_array($query)) {
                                 ?>
-                          <option value="<?php echo $row['T_ID']; ?>">
-                            <?php echo $row['TAHUN']; ?>
+                          <option value="<?php echo $row['id_tahun']; ?>">
+                            <?php echo $row['pilih_tahun']; ?>
                           </option>
                           <?php
                             }
@@ -109,11 +109,11 @@ $nomor = nomor();
                               <select class="form-control show-tick nama_pengurus" id="nama_pengurus" name="nama_pengurus">
                                 <option value="">Pilih Pengurus</option>
                                 <?php
-                                $query = mysqli_query($con, "SELECT * FROM list_pengurus INNER JOIN th_pengurusan ON list_pengurus.T_ID_fk = th_pengurusan.T_ID ORDER BY NAMA_PENGURUS");
+                                $query = mysqli_query($con, "SELECT * FROM pengurus INNER JOIN tahun ON pengurus.id_tahun = tahun.id_tahun ORDER BY nama_pengurus");
                                   while ($row = mysqli_fetch_array($query)) {
                                       ?>
-                                  <option value="<?php echo $row['ID_PENGURUS']; ?>">
-                                  <?php echo $row['NAMA_PENGURUS']; ?>
+                                  <option value="<?php echo $row['id_pengurus']; ?>">
+                                  <?php echo $row['nama_pengurus']; ?>
                                   </option>
                                   <?php
                                   }
@@ -186,7 +186,7 @@ $nomor = nomor();
               </thead>
               <tbody>
                 <?php
-                $qu = mysqli_query($con,"select * from list_kas_rutin");
+                $qu = mysqli_query($con,"select * from bayar_kas");
                 while ($has = mysqli_fetch_row($qu))
                 {
                   ?>
@@ -249,7 +249,7 @@ $nomor = nomor();
               <script>//$("#list_pengurus").chained("#th_pengurusan");
               function listpengurus(){
                   $.ajax({
-                      url: 'data/ajax.php?tahun='+document.getElementById('periode_pengurusan').value,
+                      url: 'data/ajax.php?tahun='+document.getElementById('pilih_tahun').value,
                       success: function(data) {
                           //$('.nama_pengurus').html(data);
                           $('#result_pengurus').html(data);
