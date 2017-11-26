@@ -63,7 +63,7 @@ $nomor = nomor();
               <span>Tambah Data</span>
             </button>
           </div>
-            
+
 <!--===================================================================================================================-->
           <!--MODAL TAMBAH KR-->
           <div class="modal fade" id="tambahKas" tabindex="-1" role="dialog">
@@ -74,7 +74,7 @@ $nomor = nomor();
                 </div>
                 <div class="modal-body">
                   <form action="" method="POST" role="form">
-                      
+
                       <!--PERIODE PENGURUSAN-->
                     <div class="col-md-12">
                     <b>Periode Pengurusan</b>
@@ -97,7 +97,7 @@ $nomor = nomor();
                       </select>
                     </div>
                   </div>
-                      
+
                       <!--NAMA PENGURUS-->
                       <div class="col-md-12">
                     <b>Nama Pengurus</b>
@@ -122,7 +122,7 @@ $nomor = nomor();
                         </div>
                     </div>
                   </div>
-                      
+
                 <!--ID KAS-->
                   <div class="col-md-12">
                     <b>ID Kas</b>
@@ -135,7 +135,7 @@ $nomor = nomor();
                       </div>
                     </div>
                   </div>
-                      
+
                 <!--TANGGAL BAYAR-->
                   <div class="col-md-12">
                     <b>Tanggal Bayar</b>
@@ -162,12 +162,12 @@ $nomor = nomor();
                     </div>
                   </div>
                 </div>
-                    
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
                   <button type="submit" class="btn btn-link waves-effect" name="simpan">SIMPAN</button>
                 </form>
-                    
+
                 </div>
               </div>
             </div>
@@ -208,7 +208,7 @@ $nomor = nomor();
                             <div class="modal-body">
                               <!--form action="" method="POST" role="form"-->
 
-                              <div class="col-md-6">                                
+                              <div class="col-md-6">
                                 <div class="input-group">
                                   <span class="input-group-addon">
                                     <i class="material-icons">date_range</i>
@@ -255,10 +255,10 @@ $nomor = nomor();
                           $('#result_pengurus').html(data);
                       }
                 });
-                  
+
                   //alert('tes');
               }
-              
+
               </script>
           </div>
         </div>

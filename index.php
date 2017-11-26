@@ -43,7 +43,7 @@ if(!isset($_SESSION['LEVEL'])){
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
-    
+
     <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="plugins/jquery/jquery.js"></script>
@@ -84,7 +84,7 @@ if(!isset($_SESSION['LEVEL'])){
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
-    
+
     <script src="js/jquery.chained.min.js"></script>
     <script>//$("#list_pengurus").chained("#th_pengurusan");</script>
 </head>
@@ -157,7 +157,7 @@ if(!isset($_SESSION['LEVEL'])){
                             <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}?>>
                               <a href="index.php?page=pra_kegiatan">Pra Kegiatan</a>
                             </li>
-                            <li <?php if($_GET['page']=='pasa_kegiatan') {echo "class='active'";}?>>
+                            <li <?php if($_GET['page']=='pasca_kegiatan') {echo "class='active'";}?>>
                               <a href="index.php?page=pasca_kegiatan">Pasca Kegiatan</a>
                             </li>
                         </ul>
@@ -244,7 +244,7 @@ if(!isset($_SESSION['LEVEL'])){
         </div>
     </section>
 
-    
+
 </body>
 
 </html>
