@@ -49,7 +49,7 @@ elseif (isset($_POST['update'])) {
   $nama = $_POST['nama_pengurus'];
   $query = mysqli_query($con,"update pengurus set nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
   echo "
-  <script> alert ('Data Berhasil di Update');
+  <script> alert ('Data Behasil di Update');
   document.location='index.php?page=pengurus';
   </script>
   ";
@@ -73,10 +73,11 @@ elseif (isset($_POST['hapus'])) {
       <div class="header">
         <h2>List Pengurus HMJ TI</h2>
       </div>
-      <form action="" method="POST" role="form">
-        <div class="body">
+      <div class="body">
+        <form action="" method="POST" role="form">
           <div class="row clearfix">
             <div class="col-md-3">
+              <!--b>Pilih Tahun Kepengurusan</b-->
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="material-icons">date_range</i>
@@ -102,7 +103,7 @@ elseif (isset($_POST['hapus'])) {
     </div>
   </div>
 </div>
-<!--END PILIH PERIODE KEPENGURUSAN-->
+      <!--END PILIH PERIODE KEPENGURUSAN-->
 
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -136,7 +137,7 @@ elseif (isset($_POST['hapus'])) {
                           <i class="material-icons">fingerprint</i>
                         </span>
                         <div class="form-line">
-                          <input type="text" class="form-control" name="id_pengurus" value="<?php echo $nomor; ?>" readonly>
+                          <input type="text" class="form-control" name="id_pengurus" value="<?php echo $nomor; ?>" disabled>
                         </div>
                       </div>
                     </div>
@@ -201,70 +202,72 @@ elseif (isset($_POST['hapus'])) {
                   <td><?php echo $has[0]; ?></td>
                   <td><?php echo $has[1]; ?></td>
                   <td td style="text-align:center">
-                  <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">
-                    <i class="material-icons">edit</i>
-                  </button>
-                  <button type="button" class="btn btn-danger btn-xs waves-effect" data-toggle="modal" data-target="#hapusPengurus<?php echo $has[0]; ?>">
-                    <i class="material-icons">delete</i>
-                  </button>
 
+                  <!--TOMBOL EDIT DATA-->
+                  <a href="#" class="editPengurus btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editPengurus <?php echo $has[0]; ?>" >
+                    <i class="material-icons">edit</i>
+                  </a>
                   <!--MODAL EDIT DATA PENGURUS-->
-                  <div class="modal fade" id="editPengurus<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                  <div class="modal fade" id="editPengurus <?php echo $has[0]; ?>" tabindex="-1" role="dialog">
                     <div class="modal-dialog modal-sm" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Form Edit Data Pengurus</h4>
                         </div>
-                        <form action="" method="POST" role="form">
-                          <div class="modal-body">
-                                  <input type="text" class="form-control" name="id_pengurus" value="<?php echo $has[0]; ?>" readonly>
+                        <div class="modal-body">
+                          <form action="" method="POST" role="form">
+                                  <input type="text" class="form-control" name="id_pengurus" value="" disabled>
                             <div class="col-md-12">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="material-icons">person</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="text" class="form-control" placeholder="Nama Pengurus" name="nama_pengurus" value="<?php echo $has[1]; ?>">
-                                </div>
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="text" class="form-control" placeholder="Nama Pengurus" name="nama_pengurus" valu>
                               </div>
                             </div>
                           </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                            <button type="submit" class="btn btn-link waves-effect" name="update">UPDATE</button>
-                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                          <button type="submit" class="btn btn-link waves-effect" name="update">UPDATE</button>
                         </form>
                       </div>
                     </div>
                   </div>
-                  <!--END MODAL EDIT DATA PENGURUS-->
+                </div>
+                <!--END MODAL EDIT DATA PENGURUS-->
 
-                  <!--MODAL HAPUS DATA PENGURUS-->
-                  <div class="modal fade" id="hapusPengurus<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-sm" role="document">
-                      <div class="modal-content">
+                <!--TOMBOL HAPUS DATA-->
+                <button type="button" class="btn btn-danger btn-xs waves-effect" data-toggle="modal" data-target="#hapusPengurus<?php echo $has[0]; ?>">
+                  <i class="material-icons">delete</i>
+                </button>
+                <!--MODAL HAPUS DATA PENGURUS-->
+                <div class="modal fade" id="hapusPengurus<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
                         <form action="" method="POST" role="form">
-                          <div class="modal-body">
-                            Apakah Anda Ingin Menghapus Data <?php echo $has[1]; ?>?
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                            <button type="submit" class="btn btn-link waves-effect" name="hapus" value="<?php  echo $has[0]; ?>">HAPUS</button>
-                          </div>
-                        </form>
+                          Apakah Anda Ingin Menghapus Data <?php echo $has[1]; ?>?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                        <button type="submit" class="btn btn-link waves-effect" name="hapus" value="<?php  echo $has[0]; ?>">HAPUS</button>
+                      </form>
                       </div>
                     </div>
                   </div>
-                  <!--END MODAL HAPUS DATA PENGURUS-->
-                </td>
-              </tr>
-            <?php } ?>
-            </tbody>
-          </table>
-        </div>
-        <!--END TABEL DATA PENGURUS-->
+                </div>
+                <!--END MODAL HAPUS DATA PENGURUS-->
+              </td>
+            </tr>
+          <?php } ?>
+          </tbody>
+        </table>
       </div>
+      <!--END TABEL DATA PENGURUS-->
     </div>
   </div>
+</div>
 </div>
 </div>

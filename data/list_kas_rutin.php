@@ -75,8 +75,8 @@ $nomor = nomor();
                 <div class="modal-body">
                   <form action="" method="POST" role="form">
 
-                      <!--PERIODE PENGURUSAN-->
-                    <div class="col-md-12">
+                  <!--PERIODE PENGURUSAN-->
+                  <div class="col-md-12">
                     <b>Periode Pengurusan</b>
                     <div class="input-group">
                       <span class="input-group-addon">
@@ -85,21 +85,19 @@ $nomor = nomor();
                       <select class="form-control show-tick" id="periode_pengurusan" name="periode_pengurusan" onchange="listpengurus()">
                         <option value="">Pilih Periode</option>
                         <?php
-                            $query = mysqli_query($con, "SELECT * FROM tahun ORDER BY pilih_tahun");
-                            while ($row = mysqli_fetch_array($query)) {
-                                ?>
-                          <option value="<?php echo $row['id_tahun']; ?>">
-                            <?php echo $row['pilih_tahun']; ?>
-                          </option>
-                          <?php
-                            }
+                        $query = mysqli_query($con, "SELECT * FROM tahun ORDER BY pilih_tahun");
+                        while ($row = mysqli_fetch_array($query)) {
                         ?>
+                        <option value="<?php echo $row['id_tahun']; ?>">
+                        <?php echo $row['pilih_tahun']; ?>
+                        </option>
+                        <?php } ?>
                       </select>
                     </div>
                   </div>
 
-                      <!--NAMA PENGURUS-->
-                      <div class="col-md-12">
+                <!--NAMA PENGURUS-->
+                  <div class="col-md-12">
                     <b>Nama Pengurus</b>
                     <div class="input-group">
                       <span class="input-group-addon">
@@ -107,17 +105,15 @@ $nomor = nomor();
                       </span>
                         <div id="result_pengurus">
                               <select class="form-control show-tick nama_pengurus" id="nama_pengurus" name="nama_pengurus">
-                                <option value="">Pilih Pengurus</option>
+                                <option value="">-- Pilih Pengurus --</option>
                                 <?php
                                 $query = mysqli_query($con, "SELECT * FROM pengurus INNER JOIN tahun ON pengurus.id_tahun = tahun.id_tahun ORDER BY nama_pengurus");
-                                  while ($row = mysqli_fetch_array($query)) {
-                                      ?>
-                                  <option value="<?php echo $row['id_pengurus']; ?>">
-                                  <?php echo $row['nama_pengurus']; ?>
-                                  </option>
-                                  <?php
-                                  }
-                                  ?>
+                                while ($row = mysqli_fetch_array($query)) {
+                                ?>
+                                <option value="<?php echo $row['id_pengurus']; ?>">
+                                <?php echo $row['nama_pengurus']; ?>
+                                </option>
+                                <?php } ?>
                               </select>
                         </div>
                     </div>
@@ -148,7 +144,7 @@ $nomor = nomor();
                       </div>
                     </div>
                   </div>
-                      
+
                 <!--JUMLAH BAYAR-->
                   <div class="col-md-12">
                     <b>Jumlah Bayar</b>

@@ -77,6 +77,9 @@ if(!isset($_SESSION['LEVEL'])){
     <script src="plugins/flot-charts/jquery.flot.time.js"></script>
     <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
+    <!-- Input Mask Plugin Js -->
+    <script src="plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
     <script src="js/pages/tables/jquery-datatable.js"></script>
@@ -86,7 +89,8 @@ if(!isset($_SESSION['LEVEL'])){
     <script src="js/demo.js"></script>
 
     <script src="js/jquery.chained.min.js"></script>
-    <script>//$("#list_pengurus").chained("#th_pengurusan");</script>
+
+
 </head>
 
 <body class="theme-red">
@@ -117,7 +121,7 @@ if(!isset($_SESSION['LEVEL'])){
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">Sistem Informasi Keuangan HMJ TI</a>
+                <a class="navbar-brand" href="index.php?page=home">Sistem Informasi Keuangan HMJ TI</a>
             </div>
         </div>
     </nav>
@@ -171,31 +175,6 @@ if(!isset($_SESSION['LEVEL'])){
                 </ul>
             </div>
             <!-- #Menu -->
-            <!-->
-            <div class="menu">
-                <ul class="list">
-                    <li class="header">MENU</li>
-                    <li><a href="index.php?page=home"><i class="material-icons">home</i><span>Home</span></a></li>
-                    <li><a href="index.php?page=pengurus"><i class="material-icons">people</i><span>List Pengurus</span></a></li>
-                    <li><a href="index.php?page=kas_rutin"><i class="material-icons">assignment</i><span>List Kas Rutin</span></a></li>
-                    <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Keuangan Kegiatan</span></a>
-                        <ul class="ml-menu">
-                            <li><a href="index.php?page=pra_kegiatan">Pra Kegiatan</a></li>
-                            <li><a href="index.php?page=pasca_kegiatan">Pasca Kegiatan</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="pages/changelogs.html">
-                            <i class="material-icons">update</i>
-                            <span>Dari Template</span>
-                        </a>
-                    </li><a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
-                    <li>
-                    </li>
-                </ul>
-            </div>
-            <-->
-
 
             <!-- Footer -->
             <div class="legal">
@@ -244,9 +223,25 @@ if(!isset($_SESSION['LEVEL'])){
         </div>
     </section>
 
+    <!--div id="mpengurus" class="modal fade">
+    </div-->
+
 
 </body>
 
 </html>
-
+<!--script>
+$(".editPengurus").click(function(e){
+  var m = $(this).attr("id");
+    $.ajax({
+      url:"data/editpengurus.php",
+      type:"GET",
+      data:{id_pengurus:m,},
+      success :function(ajaxData){
+        $("#mpengurus").html(ajaxData);
+        $("#mpengurus").modal('show',{backdrop:'true'});
+      }
+    });
+    });
+</script-->
 <?php } ?>
