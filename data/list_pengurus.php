@@ -92,7 +92,7 @@ elseif (isset($_POST['hapus'])) {
               </div>
             </div>
             <div class="col-md-3">
-              <button type="submit" class="btn btn-primary waves-effect m-r-20">
+              <button type="submit" class="btn btn-primary waves-effect m-r-20" name="tampil">
                 <span>Tampilkan</span>
               </button>
             </div>
@@ -103,13 +103,22 @@ elseif (isset($_POST['hapus'])) {
   </div>
 </div>
 <!--END PILIH PERIODE KEPENGURUSAN-->
+<?php
+if (isset($_POST['tampil'])) {
+  $tahun = $_POST['tahun'];
 
+?>
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
         <h2>
           Tabel Pengurus HMJ TI Periode
+          <?php
+          $periode = mysqli_query($con,"select pilih_tahun from tahun where id_tahun='$tahun'");
+          $per = mysqli_fetch_array($periode);
+          echo $per['pilih_tahun'];
+          ?>
         </h2>
       </div>
       <div class="body">
@@ -191,12 +200,9 @@ elseif (isset($_POST['hapus'])) {
               </thead>
               <tbody>
                 <?php
-                $qu = mysqli_query($con,"select * from pengurus");
-                while ($has = mysqli_fetch_row($qu)) { ?>
-                <!--?php
-                if(isset($_POST['id_tahun'])){
-                $tampil = mysqli_query($con, "select * pengurus where id_tahun=".$_POST['id_tahun']."");
-                while ($row = mysqli_fetch_array($tampil)) { ?-->
+                $query = mysqli_query($con,"select * from pengurus where id_tahun='$tahun'");
+                while ($has = mysqli_fetch_row($query)) {
+                ?>
                 <tr>
                   <td><?php echo $has[0]; ?></td>
                   <td><?php echo $has[1]; ?></td>
@@ -258,7 +264,7 @@ elseif (isset($_POST['hapus'])) {
                   <!--END MODAL HAPUS DATA PENGURUS-->
                 </td>
               </tr>
-            <?php } ?>
+            <?php }} ?>
             </tbody>
           </table>
         </div>
