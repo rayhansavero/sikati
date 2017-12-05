@@ -12,42 +12,30 @@ if(!isset($_SESSION['LEVEL'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Admin Dashboard | Sikati</title>
+    <title>Admin | Sikati</title>
 
-    <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <!-- Google Fonts -->
     <link href="font/roboto_400_700_latin_cyrillic.css" rel="stylesheet" type="text/css">
     <link href="font/material_icon.css" rel="stylesheet" type="text/css">
 
-    <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Waves Effect Css -->
     <link href="plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
-
-    <!-- Bootstrap Select Css -->
     <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
-
-    <!-- Bootstrap Material Datetime Picker Css -->
     <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
     <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
     <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 
-    <!-- Jquery Core Js -->
+
     <script src="plugins/jquery/jquery.min.js"></script>
     <script src="plugins/jquery/jquery.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -56,7 +44,7 @@ if(!isset($_SESSION['LEVEL'])){
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
     <script src="plugins/node-waves/waves.js"></script>
 
-    <!-- Jquery Untuk DataTable -->
+    <!--Jquery Untuk Datatables -->
     <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
     <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
     <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
@@ -66,6 +54,7 @@ if(!isset($_SESSION['LEVEL'])){
     <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
     <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+    <script src="js/pages/tables/jquery-datatable.js"></script>
 
     <!--Jquery Untuk Chart Dashboard -->
     <script src="plugins/jquery-countto/jquery.countTo.js"></script>
@@ -81,18 +70,16 @@ if(!isset($_SESSION['LEVEL'])){
 
     <!-- Jquery untuk Datetime Picker -->
     <script src="plugins/autosize/autosize.js"></script>
-    <script src="plugins/momentjs/moment.js"></script>    
+    <script src="plugins/momentjs/moment.js"></script>
     <script src="plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
-    <script src="js/pages/tables/jquery-datatable.js"></script>
+    <script src="js/pages/index.js"></script>
     <script src="js/pages/ui/modals.js"></script>
     <script src="js/pages/forms/basic-form-elements.js"></script>
 
-    <!-- Demo Js -->
     <script src="js/demo.js"></script>
-
     <script src="js/jquery.chained.min.js"></script>
 
 </head>
@@ -141,12 +128,15 @@ if(!isset($_SESSION['LEVEL'])){
       <div class="menu">
         <ul class="list">
           <li class="header">MENU</li>
+          <!--MENU HOME-->
           <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
             <a href="index.php?page=home"><i class="material-icons">home</i><span>Home</span></a>
           </li>
+          <!--MENU PENGURUS-->
           <li <?php if($_GET['page']=='pengurus') {echo "class='active'";}?>>
             <a href="index.php?page=pengurus"><i class="material-icons">people</i><span>List Pengurus</span></a>
           </li>
+          <!--MENU KAS RUTIN-->
           <li <?php if($_GET['page']=='kas_rutin') {echo "class='active'";}
                     elseif($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Kas Rutin</span></a>
@@ -159,15 +149,24 @@ if(!isset($_SESSION['LEVEL'])){
               </li>
             </ul>
           </li>
+          <!--MENU KEGIATAN-->
           <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}
-                      elseif($_GET['page']=='pasca_kegiatan') {echo "class='active'";}?>>
+                      elseif($_GET['page']=='pasca_kegiatan') {echo "class='active'";}
+                      elseif($_GET['page']=='laporan_pra') {echo "class='active'";}
+                      elseif($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Keuangan Kegiatan</span></a>
             <ul class="ml-menu">
               <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}?>>
-                <a href="index.php?page=pra_kegiatan">Pra Kegiatan</a>
+                <a href="index.php?page=pra_kegiatan">Data Pra Kegiatan</a>
               </li>
               <li <?php if($_GET['page']=='pasca_kegiatan') {echo "class='active'";}?>>
-                <a href="index.php?page=pasca_kegiatan">Pasca Kegiatan</a>
+                <a href="index.php?page=pasca_kegiatan">Data Pasca Kegiatan</a>
+              </li>
+              <li <?php if($_GET['page']=='laporan_pra') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_pra">Laporan Pra Kegiatan</a>
+              </li>
+              <li <?php if($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_pasca">Laporan Pasca Kegiatan</a>
               </li>
             </ul>
           </li>
@@ -208,14 +207,25 @@ if(!isset($_SESSION['LEVEL'])){
         case 'kas_rutin':
         include "data/list_kas_rutin.php";
         break;
-        case 'laporan_kas':
-        include "data/laporan_kas_rutin.php";
-        break;
         case 'pra_kegiatan':
         include "data/pra_kegiatan.php";
         break;
         case 'pasca_kegiatan':
         include "data/pasca_kegiatan.php";
+        break;
+
+        case 'laporan_kas':
+        include "data/laporan_kas_rutin.php";
+        break;
+        case 'laporan_pra':
+        include "data/laporan_pra_kegiatan.php";
+        break;
+        case 'laporan_pasca':
+        include "data/laporan_pasca.php";
+        break;
+
+        case 'tambahpengurus':
+        include "data/tambahpengurus.php";
         break;
         }
       }

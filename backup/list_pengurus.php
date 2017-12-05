@@ -129,61 +129,6 @@ if (isset($_POST['tampil'])) {
               <i class="material-icons">add</i>
               <span>Tambah Data</span>
             </button>
-
-            <!--MODAL TAMBAH DATA PENGURUS-->
-            <div class="modal fade" id="tambahPengurus" tabindex="-1" role="dialog">
-              <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title">Form Tambah Data Pengurus</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form action="" method="POST" role="form">
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="material-icons">fingerprint</i>
-                        </span>
-                        <div class="form-line">
-                          <input type="text" class="form-control" name="id_pengurus" value="<?php echo $nomor; ?>" readonly>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="material-icons">person</i>
-                        </span>
-                        <div class="form-line">
-                          <input type="text" class="form-control" placeholder="Nama Pengurus" name="nama_pengurus">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="material-icons">date_range</i>
-                        </span>
-                        <select class="form-control show-tick" name="periode">
-                          <option value="">-- Pilih tahun --</option>
-                          <?php
-                              $query = mysqli_query($con, "select * from tahun");
-                              while ($row = mysqli_fetch_array($query)) { ?>
-                          <option value="<?php echo $row['id_tahun']; ?>"><?php echo $row['pilih_tahun']; ?></option>
-                          <?php } ?>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                    <button type="submit" class="btn btn-link waves-effect" name="simpan">SIMPAN</button>
-                  </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--END MODAL TAMBAH DATA PENGURUS-->
           </div>
         </div>
 

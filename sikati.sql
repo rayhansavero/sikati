@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+-- version 4.7.3
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2017 at 03:13 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Dec 05, 2017 at 08:12 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `sikati`
@@ -26,7 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `bayar_kas`
 --
 
-CREATE TABLE IF NOT EXISTS `bayar_kas` (
+CREATE TABLE `bayar_kas` (
   `id_kas` varchar(4) NOT NULL,
   `id_pengurus` varchar(4) NOT NULL,
   `id_tahun` varchar(4) NOT NULL,
@@ -48,11 +50,20 @@ INSERT INTO `bayar_kas` (`id_kas`, `id_pengurus`, `id_tahun`, `tgl_bayar_kas`, `
 -- Table structure for table `kegiatan`
 --
 
-CREATE TABLE IF NOT EXISTS `kegiatan` (
+CREATE TABLE `kegiatan` (
   `id_kegiatan` varchar(4) NOT NULL,
   `nama_kegiatan` varchar(20) NOT NULL,
   `tgl_kegiatan` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kegiatan`
+--
+
+INSERT INTO `kegiatan` (`id_kegiatan`, `nama_kegiatan`, `tgl_kegiatan`) VALUES
+('PR01', 'AOM', '2017-12-21'),
+('PR02', 'DIKLATSAR', '2017-12-29'),
+('PS03', 'AOM', '2017-12-21');
 
 -- --------------------------------------------------------
 
@@ -60,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `kegiatan` (
 -- Table structure for table `list_admin`
 --
 
-CREATE TABLE IF NOT EXISTS `list_admin` (
+CREATE TABLE `list_admin` (
   `ID_ADMIN` varchar(2) NOT NULL,
   `LEVEL` varchar(10) DEFAULT NULL,
   `PASSWORD` varchar(10) DEFAULT NULL
@@ -79,7 +90,7 @@ INSERT INTO `list_admin` (`ID_ADMIN`, `LEVEL`, `PASSWORD`) VALUES
 -- Table structure for table `master`
 --
 
-CREATE TABLE IF NOT EXISTS `master` (
+CREATE TABLE `master` (
   `id_master` varchar(4) NOT NULL,
   `tgl_master` date NOT NULL,
   `debit_master` varchar(8) NOT NULL,
@@ -91,23 +102,10 @@ CREATE TABLE IF NOT EXISTS `master` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `panitia_kegiatan`
---
-
-CREATE TABLE IF NOT EXISTS `panitia_kegiatan` (
-  `id_panitia` varchar(4) NOT NULL,
-  `id_pengurus` varchar(4) NOT NULL,
-  `id_kegiatan` varchar(4) NOT NULL,
-  `nama_panitia` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pengurus`
 --
 
-CREATE TABLE IF NOT EXISTS `pengurus` (
+CREATE TABLE `pengurus` (
   `id_pengurus` varchar(4) NOT NULL,
   `nama_pengurus` varchar(20) NOT NULL,
   `id_tahun` varchar(4) NOT NULL
@@ -118,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `pengurus` (
 --
 
 INSERT INTO `pengurus` (`id_pengurus`, `nama_pengurus`, `id_tahun`) VALUES
-('e001', 'aaa', 'th1'),
+('e001', 'Handoko Sujatmiko', 'th1'),
 ('e002', 'bbb', 'th1'),
 ('e003', 'ccc', 'th2'),
 ('e004', 'ddd', 'th2'),
@@ -131,16 +129,26 @@ INSERT INTO `pengurus` (`id_pengurus`, `nama_pengurus`, `id_tahun`) VALUES
 -- Table structure for table `proses_kegiatan`
 --
 
-CREATE TABLE IF NOT EXISTS `proses_kegiatan` (
-  `id_proses` varchar(4) NOT NULL,
-  `id_panitia` varchar(4) NOT NULL,
+CREATE TABLE `proses_kegiatan` (
+  `id_proses` varchar(6) NOT NULL,
   `id_kegiatan` varchar(4) NOT NULL,
+  `uraian_proses` varchar(30) NOT NULL,
   `debit_proses` varchar(8) NOT NULL,
+  `kredit_proses` varchar(8) NOT NULL,
   `saldo_proses` varchar(8) NOT NULL,
   `tgl_proses` date NOT NULL,
-  `kredit_proses` varchar(8) NOT NULL,
   `ket_proses` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `proses_kegiatan`
+--
+
+INSERT INTO `proses_kegiatan` (`id_proses`, `id_kegiatan`, `uraian_proses`, `debit_proses`, `kredit_proses`, `saldo_proses`, `tgl_proses`, `ket_proses`) VALUES
+('PK0001', 'PR01', 'Sumbangan dari JTI', '800000', '0', '80000', '2017-12-06', 'diterima oleh bendahara'),
+('PK0002', 'PR01', 'Banner AOM', '0', '60000', '740000', '2017-12-07', ''),
+('PK0003', 'PR01', 'Sewa pickup', '0', '100000', '640000', '2017-12-07', 'angkut ayam'),
+('PK0004', 'PR01', 'Kas Masuk', '245000', '0', '885000', '2017-12-08', 'bulan 11');
 
 -- --------------------------------------------------------
 
@@ -148,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `proses_kegiatan` (
 -- Table structure for table `tahun`
 --
 
-CREATE TABLE IF NOT EXISTS `tahun` (
+CREATE TABLE `tahun` (
   `id_tahun` varchar(4) NOT NULL,
   `pilih_tahun` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -170,49 +178,47 @@ INSERT INTO `tahun` (`id_tahun`, `pilih_tahun`) VALUES
 -- Indexes for table `bayar_kas`
 --
 ALTER TABLE `bayar_kas`
- ADD PRIMARY KEY (`id_kas`), ADD KEY `id_pengurus` (`id_pengurus`), ADD KEY `id_tahun` (`id_tahun`);
+  ADD PRIMARY KEY (`id_kas`),
+  ADD KEY `id_pengurus` (`id_pengurus`),
+  ADD KEY `id_tahun` (`id_tahun`);
 
 --
 -- Indexes for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
- ADD PRIMARY KEY (`id_kegiatan`);
+  ADD PRIMARY KEY (`id_kegiatan`);
 
 --
 -- Indexes for table `list_admin`
 --
 ALTER TABLE `list_admin`
- ADD PRIMARY KEY (`ID_ADMIN`);
+  ADD PRIMARY KEY (`ID_ADMIN`);
 
 --
 -- Indexes for table `master`
 --
 ALTER TABLE `master`
- ADD PRIMARY KEY (`id_master`);
-
---
--- Indexes for table `panitia_kegiatan`
---
-ALTER TABLE `panitia_kegiatan`
- ADD PRIMARY KEY (`id_panitia`), ADD KEY `id_pengurus` (`id_pengurus`), ADD KEY `id_kegiatan` (`id_kegiatan`);
+  ADD PRIMARY KEY (`id_master`);
 
 --
 -- Indexes for table `pengurus`
 --
 ALTER TABLE `pengurus`
- ADD PRIMARY KEY (`id_pengurus`), ADD KEY `id_tahun` (`id_tahun`);
+  ADD PRIMARY KEY (`id_pengurus`),
+  ADD KEY `id_tahun` (`id_tahun`);
 
 --
 -- Indexes for table `proses_kegiatan`
 --
 ALTER TABLE `proses_kegiatan`
- ADD PRIMARY KEY (`id_proses`), ADD KEY `id_panitia` (`id_panitia`), ADD KEY `id_kegiatan` (`id_kegiatan`);
+  ADD PRIMARY KEY (`id_proses`),
+  ADD KEY `id_kegiatan` (`id_kegiatan`);
 
 --
 -- Indexes for table `tahun`
 --
 ALTER TABLE `tahun`
- ADD PRIMARY KEY (`id_tahun`);
+  ADD PRIMARY KEY (`id_tahun`);
 
 --
 -- Constraints for dumped tables
@@ -222,28 +228,21 @@ ALTER TABLE `tahun`
 -- Constraints for table `bayar_kas`
 --
 ALTER TABLE `bayar_kas`
-ADD CONSTRAINT `bayar_kas_ibfk_1` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `bayar_kas_ibfk_2` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `panitia_kegiatan`
---
-ALTER TABLE `panitia_kegiatan`
-ADD CONSTRAINT `panitia_kegiatan_ibfk_1` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `panitia_kegiatan_ibfk_2` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `bayar_kas_ibfk_1` FOREIGN KEY (`id_pengurus`) REFERENCES `pengurus` (`id_pengurus`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `bayar_kas_ibfk_2` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pengurus`
 --
 ALTER TABLE `pengurus`
-ADD CONSTRAINT `pengurus_ibfk_1` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pengurus_ibfk_1` FOREIGN KEY (`id_tahun`) REFERENCES `tahun` (`id_tahun`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `proses_kegiatan`
 --
 ALTER TABLE `proses_kegiatan`
-ADD CONSTRAINT `proses_kegiatan_ibfk_1` FOREIGN KEY (`id_panitia`) REFERENCES `panitia_kegiatan` (`id_panitia`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `proses_kegiatan_ibfk_2` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `proses_kegiatan_ibfk_2` FOREIGN KEY (`id_kegiatan`) REFERENCES `kegiatan` (`id_kegiatan`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
