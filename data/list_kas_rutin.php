@@ -75,6 +75,19 @@ $nomor = nomor();
                 <div class="modal-body">
                   <form action="" method="POST" role="form">
                       
+                      <!--ID KAS-->
+                  <div class="col-md-12">
+                    <b>ID Kas</b>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="material-icons">fingerprint</i>
+                      </span>
+                      <div class="form-line">
+                        <input type="text" class="form-control" name="id_kas" value="<?php echo $nomor; ?>">
+                      </div>
+                    </div>
+                  </div>
+                      
                       <!--PERIODE PENGURUSAN-->
                     <div class="col-md-12">
                     <b>Periode Pengurusan</b>
@@ -122,20 +135,7 @@ $nomor = nomor();
                         </div>
                     </div>
                   </div>
-                      
-                <!--ID KAS-->
-                  <div class="col-md-12">
-                    <b>ID Kas</b>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="material-icons">fingerprint</i>
-                      </span>
-                      <div class="form-line">
-                        <input type="text" class="form-control" name="id_kas" value="<?php echo $nomor; ?>">
-                      </div>
-                    </div>
-                  </div>
-                      
+                                            
                 <!--TANGGAL BAYAR-->
                   <div class="col-md-12">
                     <b>Tanggal Bayar</b>
@@ -144,7 +144,7 @@ $nomor = nomor();
                         <i class="material-icons">date_range</i>
                       </span>
                       <div class="form-line">
-                        <input type="text" class="form-control" name="tanggal" value="<?php echo isset($_GET['id_kas'])?$data[2]:date('d-m-Y'); ?>" disabled>
+                        <input type="text" class="form-control" name="tanggal" value="<?php echo isset($_GET['id_kas'])?$data[2]:date('Y-m-d'); ?>">
                       </div>
                     </div>
                   </div>
@@ -161,13 +161,28 @@ $nomor = nomor();
                       </div>
                     </div>
                   </div>
-                </div>
                     
                 <div class="modal-footer">
                   <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
                   <button type="submit" class="btn btn-link waves-effect" name="simpan">SIMPAN</button>
+                </div>
                 </form>
-                    
+                    <?php
+                    if(isset($_POST['simpan'])){
+                        $id_kas = $_POST['id_kas'];
+                        $periode_pengurusan = $_POST['periode_pengurusan'];
+                        $nama_pengurus = $_POST['nama_pengurus'];
+                        $tanggal = $_POST['tanggal'];
+                        $tanggal = date('Y-m-d', strtotime($tanggal));
+                        $jumlah = $_POST['jumlah'];
+                        
+                        include_once("koneksi.php");
+                        
+                        $sql = "select * from pengurus where id_pengurus='$nama_pengurus' ";
+                        $sql1 = "select * from tahun where id_tahun='$periode_pengurusan' ";
+                        $result = mysqli_query($con, "insert into bayar_kas(id_kas, id_pengurus, id_tahun, tgl_bayar_kas, jumlah_bayar_kas, saldo) values ('$id_kas', '$nama_pengurus', '$periode_pengurusan', '$tanggal', '$jumlah', '')");
+                    }
+                    ?>
                 </div>
               </div>
             </div>
@@ -178,6 +193,22 @@ $nomor = nomor();
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
               <thead>
+                  <tr>
+                    <select name="id_tahun">
+                        <option>PILIH TAHUN</option>
+                        <?php
+                            $cari = "select * from tahun";
+                            $sql = mysqli_query($con, $cari);
+                            while($data=mysqli_fetch_array($sql)){
+                        ?>
+                        <option value="<?php echo $data['id_tahun']?>"><?php echo $data['pilih_tahun']?></option>
+                        <?php
+                            }
+                        ?>
+                        <input type="submit" value="CARI" name="submit"/>
+                    </select>
+                    
+                  </tr>
                 <tr>
                   <th class="text-center">Nama</th>
                   <th class="text-center">Total Pembayaran</th>
@@ -185,14 +216,27 @@ $nomor = nomor();
                 </tr>
               </thead>
               <tbody>
-                <?php
-                $qu = mysqli_query($con,"select * from bayar_kas");
-                while ($has = mysqli_fetch_row($qu))
+                  <tr>
+                      <?php
+                      if(isset($_POST['submit'])){
+                          $id_tahun = $_POST['id_tahun'];
+                          $sql = "select * from pengurus inner join tahun on pengurus.id_tahun=tahun.id_tahun join bayar_kas on pengurus.id_pengurus=bayar_kas.id_pengurus";
+                          $q = mysqli_query($con, $sql) or die (mysqli_error());
+                          while($data = mysqli_fetch_array($q)){
+                      ?>
+                      <td><?php echo $data['nama_pengurus'];?></td>
+                      <?php
+                          }
+                      }
+                      ?>
+                      
+                    <?php
+                $qu = mysqli_query($con,"select * from bayar_kas inner join pengurus on bayar_kas.id_pengurus=pengurus.id_pengurus");
+                while ($has = mysqli_fetch_array($qu))
                 {
                   ?>
-                  <tr>
-                    <td><?php echo $has[1]; ?></td>
-                    <td>Rp <?php echo $has[3]; ?></td>
+                      
+                    <td>Rp <?php echo $has['jumlah_bayar_kas']; ?></td>
                     <td td style="text-align:center">
                       <!--TOMBOL DETAIL DATA-->
                       <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has[1]; ?>">
@@ -241,7 +285,7 @@ $nomor = nomor();
                   </tr>
                   <?php
                   ;
-                }
+                  }
                 ?>
               </tbody>
             </table>
@@ -249,7 +293,7 @@ $nomor = nomor();
               <script>//$("#list_pengurus").chained("#th_pengurusan");
               function listpengurus(){
                   $.ajax({
-                      url: 'data/ajax.php?tahun='+document.getElementById('pilih_tahun').value,
+                      url: 'data/ajax.php?tahun='+document.getElementById('p').value,
                       success: function(data) {
                           //$('.nama_pengurus').html(data);
                           $('#result_pengurus').html(data);
