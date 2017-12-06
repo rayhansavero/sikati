@@ -62,6 +62,23 @@ $nomor = nomor();
               <i class="material-icons">add</i>
               <span>Tambah Data</span>
             </button>
+              
+                      <form action="#" method="">
+                    <select name="id_tahun">
+                        <option>PILIH TAHUN</option>
+                        <?php
+                            $cari = "select * from tahun";
+                            $sql = mysqli_query($con, $cari);
+                            while($data=mysqli_fetch_array($sql)){
+                        ?>
+                        <option value="<?php echo $data['id_tahun']?>"><?php echo $data['pilih_tahun']?></option>
+                        <?php
+                            }
+                        ?>
+                    <input type="text" name="id_tahun" >
+                    </select>
+                           <input type="submit" value="CARI" name="submit"/>
+                   </form> 
           </div>
             
 <!--===================================================================================================================-->
@@ -194,71 +211,72 @@ $nomor = nomor();
             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
               <thead>
                   <tr>
-                    <select name="id_tahun">
-                        <option>PILIH TAHUN</option>
-                        <?php
-                            $cari = "select * from tahun";
-                            $sql = mysqli_query($con, $cari);
-                            while($data=mysqli_fetch_array($sql)){
-                        ?>
-                        <option value="<?php echo $data['id_tahun']?>"><?php echo $data['pilih_tahun']?></option>
-                        <?php
-                            }
-                        ?>
-                        <input type="submit" value="CARI" name="submit"/>
-                    </select>
-                    
                   </tr>
                 <tr>
                   <th class="text-center">Nama</th>
-                  <th class="text-center">Total Pembayaran</th>
+                  <!--tr>th class="text-center">Total Pembayaran</th-->
                   <th class="text-center">Detail Pembayaran</th>
                 </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <?php
-                      if(isset($_POST['submit'])){
-                          $id_tahun = $_POST['id_tahun'];
-                          $sql = "select * from pengurus inner join tahun on pengurus.id_tahun=tahun.id_tahun join bayar_kas on pengurus.id_pengurus=bayar_kas.id_pengurus";
-                          $q = mysqli_query($con, $sql) or die (mysqli_error());
+                  
+                      <!--?php
+                  
+                        if(isset($_GET['submit'])){
+                            $thn = $_GET['id_tahun'];
+                            $sql = "select * from pengurus inner join tahun on pengurus.id_tahun=tahun.id_tahun join bayar_kas on pengurus.id_pengurus=bayar_kas.id_pengurus where tahun.id_tahun = '$thn' ";
+                            
+                        } else {
+                            $sql = "select * from pengurus left join tahun on pengurus.id_tahun=tahun.id_tahun left join bayar_kas on pengurus.id_pengurus=bayar_kas.id_pengurus";
+                         
+                        }
+                           $q = mysqli_query($con, $sql) or die (mysqli_error());
                           while($data = mysqli_fetch_array($q)){
-                      ?>
-                      <td><?php echo $data['nama_pengurus'];?></td>
-                      <?php
-                          }
-                      }
-                      ?>
-                      
-                    <?php
-                $qu = mysqli_query($con,"select * from bayar_kas inner join pengurus on bayar_kas.id_pengurus=pengurus.id_pengurus");
-                while ($has = mysqli_fetch_array($qu))
-                {
+                      ?-->
+                  
+                  
+                  <?php
+                  $sql = mysqli_query($con, "select * from pengurus inner join tahun on pengurus.id_tahun=tahun.id_tahun");
+                  while ($data=mysqli_fetch_array($sql)){
                   ?>
+                  
+                  
+                  <tr>
+                      <td><?php echo $data['nama_pengurus'];?></td>
                       
-                    <td>Rp <?php echo $has['jumlah_bayar_kas']; ?></td>
+                      <?php } ?> 
+                     
+                      <?php
+                  $sql = mysqli_query($con, "select * from bayar_kas inner join pengurus on bayar_kas.id_pengurus=pengurus.id_pengurus");
+                  while ($data=mysqli_fetch_array($sql)){
+                  ?>
+                    <!--td>Rp <!--?php echo $data['jumlah_bayar_kas']; ?></td-->
                     <td td style="text-align:center">
                       <!--TOMBOL DETAIL DATA-->
-                      <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has[1]; ?>">
+                      <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $data[1]; ?>">
                         <i class="material-icons">description</i>
                       </button>
+                        
+                        
+                        
+                        
                       <!--MODAL DETAIL DATA-->
-                      <div class="modal fade" id="detailKR<?php echo $has[1]; ?>" tabindex="-1" role="dialog">
+                      <div class="modal fade" id="detailKR<?php echo $data[1]; ?>" tabindex="-1" role="dialog">
                         <div class="modal-dialog " role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h4 class="modal-title">Detail Pembayaran <?php echo $has[1]; ?></h4>
+                              <h4 class="modal-title">Detail Pembayaran <?php echo $data['nama_pengurus']; ?></h4>
                             </div>
                             <div class="modal-body">
-                              <!--form action="" method="POST" role="form"-->
+                              <form action="" method="POST" role="form"-->
 
-                              <div class="col-md-6">                                
+                              <!--div class="col-md-6">                                
                                 <div class="input-group">
                                   <span class="input-group-addon">
                                     <i class="material-icons">date_range</i>
                                   </span>
                                   <div class="form-line">
-                                    <input type="text" class="form-control" name="tanggal" value="<?php echo $has[2]; ?>">
+                                    <input type="text" class="form-control" name="tanggal" value="<?php echo $data[2]; ?>">
                                   </div>
                                 </div>
                               </div>
@@ -268,10 +286,26 @@ $nomor = nomor();
                                     <i class="material-icons">attach_money</i>
                                   </span>
                                   <div class="form-line">
-                                    <input type="text" class="form-control" name="bayar" value="Rp <?php echo $has[3]; ?>">
+                                    <input type="text" class="form-control" name="bayar" value="Rp <?php echo $data[3]; ?>">
                                   </div>
                                 </div>
-                              </div>
+                              </div-->
+                                
+                                <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID Kas</th>
+                                    <th>Tanggal</th>
+                                        <th>Jumlah</th>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo $data['id_kas']; ?></td>
+                                        <td><?php echo $data['tgl_bayar_kas']; ?></td>
+                                        <td><?php echo $data['jumlah_bayar_kas']; ?></td>
+                                    </tr>
+                                </thead>
+                                </table>
+                                
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">TUTUP</button>
@@ -281,12 +315,16 @@ $nomor = nomor();
                         </div>
                       </div>
                       <!--END MODAL EDIT DATA PENGURUS-->
+                        
+                        
+                   <?php } ?>     
                     </td>
+                   
                   </tr>
-                  <?php
-                  ;
+                  <!--?php
+                  
                   }
-                ?>
+                ?-->
               </tbody>
             </table>
               <script src="js/jquery.chained.min.js"></script>
