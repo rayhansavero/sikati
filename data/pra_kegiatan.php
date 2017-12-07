@@ -63,7 +63,7 @@ $pros = pros();
 if (isset($_POST['simpankg'])) {
   $nama = $_POST['nama'];
   $tgl = $_POST['tgl'];
-  $query = mysqli_query($con,"insert into kegiatan values ('$keg','$nama','$tanggal')") or die(mysql_error());
+  $query = mysqli_query($con,"insert into kegiatan values ('$keg','$nama','$tgl')") or die(mysql_error());
   echo "
   <script> alert ('Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pra_kegiatan';
