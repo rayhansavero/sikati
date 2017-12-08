@@ -2,7 +2,7 @@
 $con = mysqli_connect('localhost','root','','sikati');
 
 //PROSES EDIT dan HAPUS DATA PENGURUS
-if (isset($_POST['update'])) {  
+if (isset($_POST['update'])) {
   $id = $_POST['id_pengurus'];
   $nama = $_POST['nama_pengurus'];
   $query = mysqli_query($con,"update pengurus set nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
@@ -52,9 +52,6 @@ elseif (isset($_POST['hapus'])) {
             <button type="submit" class="btn btn-primary waves-effect" name="tampil">
               <span>Tampilkan</span>
             </button>
-            <a href="index.php?page=tambahpengurus" class="btn bg-teal waves-effect" role="button">
-                Tambah data Pengurus
-            </a>
           </div>
         </form>
       </div>
@@ -62,6 +59,7 @@ elseif (isset($_POST['hapus'])) {
   </div>
 </div>
 <!--END PILIH PERIODE KEPENGURUSAN-->
+
 <?php
 if (isset($_POST['tampil'])) {
   $tahun = $_POST['tahun'];
@@ -80,22 +78,40 @@ if (isset($_POST['tampil'])) {
         </h2>
       </div>
       <div class="body">
+
+        <div class="row clearfix">
+        <form class="" action="index.php?page=tambahpengurus" method="post">
+          <div class="col-md-2">
+            <div class="input-group">
+              <div class="form-line">
+                <input type="number" min="0" class="form-control" placeholder="Jumlah Data" name="jmlTambah" required>
+                <input type="hidden" name="tahun" value="<?php echo $tahun; ?>" readonly>
+              </div>
+            </div>
+          </div>
+          <button type="submit" name="tambahPengurus" class="btn btn-primary waves-effect">
+            <span>Tambah Pengurus</span>
+          </button>
+        </form>
+        </div>
+
         <div class="table-responsive">
           <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
             <thead>
               <tr>
-                <th class="text-center">Id</th>
+                <th class="text-center">No</th>
                 <th class="text-center">Nama</th>
                 <th class="text-center">Opsi</th>
               </tr>
             </thead>
             <tbody>
               <?php
+              $no = 1;
               $query = mysqli_query($con,"select * from pengurus where id_tahun='$tahun'");
               while ($has = mysqli_fetch_row($query)) {
               ?>
               <tr>
-                <td><?php echo $has[0]; ?></td>
+                <td><?php echo $no; ?></td>
                 <td><?php echo $has[1]; ?></td>
                 <td td style="text-align:center">
                 <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#editPengurus<?php echo $has[0]; ?>">
@@ -156,11 +172,14 @@ if (isset($_POST['tampil'])) {
 
                 </td>
               </tr>
-            <?php } ?>
+            <?php
+            $no++;
+            }
+            ?>
             </tbody>
           </table>
-          <!--END TABEL DATA PENGURUS-->
         </div>
+
       </div>
     </div>
   </div>
