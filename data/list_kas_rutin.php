@@ -81,10 +81,10 @@ if (isset($_POST['simpankas'])) {
             <span>Tampilkan</span>
           </button>
         </div>
+        </div>
         </form>
       </div>
     </div>
-  </div>
 </div>
 
 <?php
@@ -194,28 +194,28 @@ if (isset($_POST['tampil'])) {
             </thead>
             <tbody>
               <?php
-              $qu = mysqli_query($con,"SELECT * FROM pengurus WHERE id_tahun='$tahun'");
-              while ($has = mysqli_fetch_row($qu))
+              $qu = mysqli_query($con,"SELECT * FROM pengurus inner join bayar_kas on (pengurus.id_pengurus = bayar_kas.id_pengurus) WHERE pengurus.id_tahun='$tahun'");
+              while ($has = mysqli_fetch_array($qu))
               {
               ?>
               <tr>
-                <td><?php echo $has[1]; ?>
+                <td><?php echo $has['nama_pengurus']; ?>
                 </td>
                 <td td style="text-align:center">
                 <!--TOMBOL DETAIL DATA-->
-                <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has[1]; ?>">
+                <button type="button" class="btn btn-primary btn-xs waves-effect" data-toggle="modal" data-target="#detailKR<?php echo $has['nama_pengurus']; ?>">
                   <i class="material-icons">description</i>
                 </button>
 
                 <!--MODAL DETAIL DATA-->
-                  <div class="modal fade" id="detailKR<?php echo $has[1]; ?>" tabindex="-1" role="dialog">
+                  <div class="modal fade" id="detailKR<?php echo $has['nama_pengurus']; ?>" tabindex="-1" role="dialog">
                     <div class="modal-dialog " role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title">Detail Pembayaran <?php echo $has[1]; ?></h4>
+                          <h4 class="modal-title">Detail Pembayaran <?php echo $has['nama_pengurus']; ?></h4>
                         </div>
                         <div class="modal-body">
-                          <div class="col-md-6">
+                          <!--div class="col-md-6">
                             <div class="input-group">
                               <span class="input-group-addon">
                                 <i class="material-icons">date_range</i>
@@ -234,7 +234,33 @@ if (isset($_POST['tampil'])) {
                                 <input type="text" class="form-control" value="Rp" readonly>
                               </div>
                             </div>
-                          </div>
+                          </div-->
+                            <div class="col-md-12">
+                                <table>
+                                    <?php
+                	                   $qu = mysqli_query($con,"SELECT * FROM bayar_kas");
+                                        while ($has = mysqli_fetch_array($qu))
+                                            {
+                                    ?>
+                                    <thead>
+                                        <tr>
+                                            <td>Tanggal</td>
+                                            <td>Jumlah Pembayaran</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            
+                                            <td><?php echo $has['tgl_bayar_kas']; ?></td>
+                                            <td><?php echo $has['jumlah_bayar_kas']; ?></td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    <?php } ?>
+                                </table>
+                            
+                            
+                            </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">TUTUP</button>
