@@ -221,11 +221,14 @@ if(!isset($_SESSION['LEVEL'])){
         include "data/laporan_pra_kegiatan.php";
         break;
         case 'laporan_pasca':
-        include "data/laporan_pasca.php";
+        include "data/laporan_pasca_kegiatan.php";
         break;
 
-        case 'tambahpengurus':
-        include "data/tambahpengurus.php";
+        case 'tambah_pengurus':
+        include "data/tambah_pengurus.php";
+        break;
+        case 'tambah_kas':
+        include "data/tambah_kas.php";
         break;
         }
       }

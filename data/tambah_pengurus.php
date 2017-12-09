@@ -32,7 +32,7 @@ function idpeng() {
 $idpeng = idpeng();
 
 
-if (isset($_POST['simpanpg'])) {
+if(isset($_POST['simpanpg'])) {
   $total = $_POST['total'];
 
   for($i=1; $i<=$total; $i++)
@@ -89,6 +89,9 @@ $tahun = $_POST['tahun'];
           </div>
         </div>
         <?php } ?>
+        <a class="btn bg-pink waves-effect" role="button" href="index.php?page=kas_rutin">
+          <span>Batal</span>
+        </a>
         <button type="submit" class="btn btn-primary waves-effect" name="simpanpg">
           <span>Simpan</span>
         </button>

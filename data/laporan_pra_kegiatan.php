@@ -66,7 +66,7 @@ $kegiatan = $_POST['kegiatan'];
           <table class="table table-bordered table-striped table-hover dataTable js-exportable">
           <thead>
             <tr>
-              <th class="hidden">ID</th>
+              <th class="text-center">No</th>
               <th class="text-center">Uraian</th>
               <th class="text-center">Debit</th>
               <th class="text-center">Kredit</th>
@@ -77,42 +77,46 @@ $kegiatan = $_POST['kegiatan'];
           </thead>
           <tbody>
             <?php
+            $no = 1;
             $qu = mysqli_query($con,"select * from proses_kegiatan where id_kegiatan='$kegiatan'");
             while ($has = mysqli_fetch_row($qu))
             {
             ?>
               <tr>
-                <td class="hidden"><?php echo $has[0]; ?></td>
+                <td width='5%'><?php echo $no++; ?></td>
                 <td><?php echo $has[2]; ?></td>
-                <td><?php echo $has[3]; ?></td>
-                <td><?php echo $has[4]; ?></td>
-                <td><?php echo $has[5]; ?></td>
+                <td>Rp <?php echo $has[3]; ?></td>
+                <td>Rp <?php echo $has[4]; ?></td>
+                <td>Rp <?php echo $has[5]; ?></td>
                 <td><?php echo $has[6]; ?></td>
                 <td><?php echo $has[7]; ?></td>
               </tr>
               <?php } ?>
           </tbody>
-          <tfoot>
+          <!--tfoot>
             <th class="text-right">Jumlah</th>
-            <th><?php
-                $debit = mysqli_query($con,"select sum(debit_proses) from proses_kegiatan");
+            <th>Rp
+                <?php
+                $debit = mysqli_query($con,"SELECT SUM(debit_proses) FROM proses_kegiatan WHERE id_kegiatan='$has[1]'");
                 $tampil = mysqli_fetch_array($debit);
-                echo $tampil['sum(debit_proses)'];
+                echo $tampil['SUM(debit_proses)'];
                 ?>
             </th>
-            <th><?php
-                $kredit = mysqli_query($con,"select sum(kredit_proses) from proses_kegiatan");
+            <th>Rp
+                <?php
+                $kredit = mysqli_query($con,"SELECT SUM(kredit_proses) FROM proses_kegiatan WHERE id_kegiatan='$has[1]");
                 $tampil = mysqli_fetch_array($kredit);
-                echo $tampil['sum(kredit_proses)'];
+                echo $tampil['SUM(kredit_proses)'];
                 ?>
             </th>
-            <th><?php
-                $saldo = mysqli_query($con,"select sum(saldo_proses) from proses_kegiatan");
+            <th>Rp
+                <?php
+                $saldo = mysqli_query($con,"SELECT SUM(saldo_proses) FROM proses_kegiatan WHERE id_kegiatan='$has[1]");
                 $tampil = mysqli_fetch_array($saldo);
-                echo $tampil['sum(saldo_proses)'];
+                echo $tampil['SUM(saldo_proses)'];
                 ?>
             </th>
-          </tfoot>
+          </tfoot-->
         </table>
       </div>
     </div>

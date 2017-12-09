@@ -2,7 +2,6 @@
 $con = mysqli_connect('localhost','root','','sikati');
 ?>
 
-<!--PILIH PERIODE KEPENGURUSAN-->
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
@@ -28,9 +27,9 @@ $con = mysqli_connect('localhost','root','','sikati');
               </select>
             </div>
           </div>
-            <button type="submit" class="btn btn-primary waves-effect" name="tampil">
-              <span>Tampilkan</span>
-            </button>
+          <button type="submit" class="btn btn-primary waves-effect" name="tampil">
+            <span>Tampilkan</span>
+          </button>
           </form>
         </div>
       </div>
@@ -66,7 +65,7 @@ $kegiatan = $_POST['kegiatan'];
           <table class="table table-bordered table-striped table-hover dataTable js-exportable">
           <thead>
             <tr>
-              <th class="hidden">ID</th>
+              <th class="text-center">No</th>
               <th class="text-center">Uraian</th>
               <th class="text-center">Debit</th>
               <th class="text-center">Kredit</th>
@@ -77,22 +76,23 @@ $kegiatan = $_POST['kegiatan'];
           </thead>
           <tbody>
             <?php
+            $no = 1;
             $qu = mysqli_query($con,"select * from proses_kegiatan where id_kegiatan='$kegiatan'");
             while ($has = mysqli_fetch_row($qu))
             {
             ?>
               <tr>
-                <td class="hidden"><?php echo $has[0]; ?></td>
+                <td width='5%'><?php echo $no++; ?></td>
                 <td><?php echo $has[2]; ?></td>
-                <td><?php echo $has[3]; ?></td>
-                <td><?php echo $has[4]; ?></td>
-                <td><?php echo $has[5]; ?></td>
+                <td>Rp <?php echo $has[3]; ?></td>
+                <td>Rp <?php echo $has[4]; ?></td>
+                <td>Rp <?php echo $has[5]; ?></td>
                 <td><?php echo $has[6]; ?></td>
                 <td><?php echo $has[7]; ?></td>
               </tr>
               <?php } ?>
           </tbody>
-          <tfoot>
+          <!--tfoot>
             <th class="text-right">Jumlah</th>
             <th><?php
                 $debit = mysqli_query($con,"select sum(debit_proses) from proses_kegiatan");
@@ -112,7 +112,7 @@ $kegiatan = $_POST['kegiatan'];
                 echo $tampil['sum(saldo_proses)'];
                 ?>
             </th>
-          </tfoot>
+          </tfoot-->
         </table>
       </div>
     </div>

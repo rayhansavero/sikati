@@ -72,13 +72,13 @@ if (isset($_POST['simpankg'])) {
 }
 elseif (isset($_POST['simpanps'])) {
   $kegiatan = $_POST['kegiatan'];
+  $tgl = $_POST['tgl'];
   $uraian = $_POST['uraian'];
   $debit = $_POST['debit'];
   $kredit = $_POST['kredit'];
   $saldo = $_POST['saldo'];
-  $tgl = $_POST['tgl'];
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$uraian','$debit','$kredit','$saldo','$tgl','$ket')") or die(mysql_error());
+  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldo','$ket')") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pra_kegiatan';
@@ -87,13 +87,13 @@ elseif (isset($_POST['simpanps'])) {
 }
 elseif (isset($_POST['update'])) {
   $pros = $_POST['pros'];
+  $tgl = $_POST['tgl'];
   $uraian = $_POST['uraian'];
   $debit = $_POST['debit'];
   $kredit = $_POST['kredit'];
   $saldo = $_POST['saldo'];
-  $tgl = $_POST['tgl'];
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"update proses_kegiatan set uraian_proses='$uraian',debit_proses='$debit',kredit_proses='$kredit',saldo_proses='$saldo',tgl_proses='$tgl',ket_proses='$ket' where id_proses='$pros' ") or die(mysql_error());
+  $query = mysqli_query($con,"update proses_kegiatan set tgl_proses='$tgl',uraian_proses='$uraian',debit_proses='$debit',kredit_proses='$kredit',saldo_proses='$saldo',ket_proses='$ket' where id_proses='$pros' ") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Berhasil di Update');
   document.location='index.php?page=pra_kegiatan';
@@ -316,24 +316,25 @@ $kegiatan = $_POST['kegiatan'];
         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
           <thead>
             <tr>
-              <th class="hidden">ID</th>
+              <th class="text">No</th>
+              <th class="text-center">Tanggal</th>
               <th class="text-center">Uraian</th>
               <th class="text-center">Debit</th>
               <th class="text-center">Kredit</th>
               <th class="text-center">Saldo</th>
-              <th class="text-center">Tanggal</th>
               <th class="text-center">Keterangan</th>
               <th class="text-center">Opsi</th>
             </tr>
           </thead>
           <tbody>
             <?php
-            $qu = mysqli_query($con,"select * from proses_kegiatan where id_kegiatan='$kegiatan'");
+            $no = 1;
+            $qu = mysqli_query($con,"SELECT * FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
             while ($has = mysqli_fetch_row($qu))
             {
             ?>
               <tr>
-                <td class="hidden"><?php echo $has[0]; ?></td>
+                <td width='5%'><?php echo $no++; ?></td>
                 <td><?php echo $has[2]; ?></td>
                 <td><?php echo $has[3]; ?></td>
                 <td><?php echo $has[4]; ?></td>
