@@ -76,12 +76,12 @@ $tahun = $_POST['tahun'];
             </thead>
             <tbody>
               <?php
-              $query = mysqli_query("select * from bayar_kas where month(tgl_bayar_kas)='$bulan' and year(tgl_bayar_kas)='$tahun'");
+              $query = mysqli_query($con, "select * from bayar_kas where month(tgl_bayar_kas)='$bulan' and year(tgl_bayar_kas)='$tahun'");
               while ($has = mysqli_fetch_array($query)) {
               ?>
               <tr>
                 <td><?php echo $has[1]; ?></td>
-                <td><?php $tampilpeng = mysqli_query("select * from pengurus where id_pengurus='$has[id_pengurus]'");
+                <td><?php $tampilpeng = mysqli_query($con, "select * from pengurus where id_pengurus='$has[id_pengurus]'");
                                 $peng	= mysqli_fetch_array($tampilpeng);
                                         echo $peng['nama_pengurus']
                     ?>
