@@ -128,6 +128,11 @@ if(!isset($_SESSION['LEVEL'])){
       <div class="menu">
         <ul class="list">
           <li class="header">MENU</li>
+            <?php
+                $masuk1 = $_SESSION['LEVEL'] == 'admin';
+                if ($masuk1){ 
+                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'admin') { 
+            ?>
           <!--MENU HOME-->
           <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
             <a href="index.php?page=home"><i class="material-icons">home</i><span>Home</span></a>
@@ -146,7 +151,7 @@ if(!isset($_SESSION['LEVEL'])){
               </li>
               <li <?php if($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
                 <a href="index.php?page=laporan_kas">Laporan Kas Rutin</a>
-              </li>
+              </li>';    
             </ul>
           </li>
           <!--MENU KEGIATAN-->
@@ -176,8 +181,57 @@ if(!isset($_SESSION['LEVEL'])){
           <li>
             <a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
           </li>
+            <?php } ?>
+           <!--=========================================================================================================--> 
+            <?php
+                $masuk2 = $_SESSION['LEVEL'] == 'kahim';
+                if ($masuk2){ 
+                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'kahim') { 
+            ?>
+          <!--MENU HOME-->
+          <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
+            <a href="index.php?page=home"><i class="material-icons">home</i><span>Home</span></a>
+          </li>
+          <!--MENU PENGURUS-->
+          <li <?php if($_GET['page']=='pengurus') {echo "class='active'";}?>>
+            <a href="index.php?page=pengurus"><i class="material-icons">people</i><span>List Pengurus</span></a>
+          </li>
+          <!--MENU KAS RUTIN-->
+          <li <?php if($_GET['page']=='kas_rutin') {echo "class='active'";}
+                    elseif($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Kas Rutin</span></a>
+            <ul class="ml-menu">
+              <li <?php if($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_kas">Laporan Kas Rutin</a>
+              </li>';    
+            </ul>
+          </li>
+          <!--MENU KEGIATAN-->
+          <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}
+                      elseif($_GET['page']=='pasca_kegiatan') {echo "class='active'";}
+                      elseif($_GET['page']=='laporan_pra') {echo "class='active'";}
+                      elseif($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Keuangan Kegiatan</span></a>
+            <ul class="ml-menu">
+              <li <?php if($_GET['page']=='laporan_pra') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_pra">Laporan Pra Kegiatan</a>
+              </li>
+              <li <?php if($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_pasca">Laporan Pasca Kegiatan</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="pages/changelogs.html"><i class="material-icons">update</i><span>Dari Template</span></a>
+          </li>
+          <li>
+            <a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
+          </li>
+            <?php } ?>
         </ul>
       </div>
+        
+        
 
 
       <!--FOOTER-->
