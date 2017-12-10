@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2017 at 08:12 PM
+-- Generation Time: Dec 10, 2017 at 02:22 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -29,20 +29,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bayar_kas` (
-  `id_kas` varchar(4) NOT NULL,
+  `id_kas` varchar(6) NOT NULL,
   `id_pengurus` varchar(4) NOT NULL,
   `id_tahun` varchar(4) NOT NULL,
   `tgl_bayar_kas` date NOT NULL,
-  `jumlah_bayar_kas` varchar(8) NOT NULL,
-  `saldo_kas` varchar(8) NOT NULL
+  `jumlah_bayar_kas` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bayar_kas`
 --
 
-INSERT INTO `bayar_kas` (`id_kas`, `id_pengurus`, `id_tahun`, `tgl_bayar_kas`, `jumlah_bayar_kas`, `saldo_kas`) VALUES
-('K001', 'e003', 'th2', '2017-11-25', '2000', '');
+INSERT INTO `bayar_kas` (`id_kas`, `id_pengurus`, `id_tahun`, `tgl_bayar_kas`, `jumlah_bayar_kas`) VALUES
+('K00001', 'E001', 'TH03', '2017-12-09', '2000'),
+('K00002', 'E001', 'TH03', '2017-12-09', '2000'),
+('K00003', 'E001', 'TH03', '2017-12-09', '2000'),
+('K00004', 'E003', 'TH03', '2017-12-09', '2000'),
+('K00005', 'E002', 'TH03', '2017-12-22', '2000'),
+('K00006', 'E003', 'TH03', '2017-12-22', '2000');
 
 -- --------------------------------------------------------
 
@@ -116,12 +120,9 @@ CREATE TABLE `pengurus` (
 --
 
 INSERT INTO `pengurus` (`id_pengurus`, `nama_pengurus`, `id_tahun`) VALUES
-('e001', 'Handoko Sujatmiko', 'th1'),
-('e002', 'bbb', 'th1'),
-('e003', 'ccc', 'th2'),
-('e004', 'ddd', 'th2'),
-('e005', 'eee', 'th3'),
-('e006', 'fff', 'th3');
+('E001', 'Gus Mus', 'TH03'),
+('E002', 'Cak Nun', 'TH03'),
+('E003', 'Gus Dur', 'TH03');
 
 -- --------------------------------------------------------
 
@@ -132,11 +133,11 @@ INSERT INTO `pengurus` (`id_pengurus`, `nama_pengurus`, `id_tahun`) VALUES
 CREATE TABLE `proses_kegiatan` (
   `id_proses` varchar(6) NOT NULL,
   `id_kegiatan` varchar(4) NOT NULL,
+  `tgl_proses` date NOT NULL,
   `uraian_proses` varchar(30) NOT NULL,
   `debit_proses` varchar(8) NOT NULL,
   `kredit_proses` varchar(8) NOT NULL,
   `saldo_proses` varchar(8) NOT NULL,
-  `tgl_proses` date NOT NULL,
   `ket_proses` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -144,11 +145,11 @@ CREATE TABLE `proses_kegiatan` (
 -- Dumping data for table `proses_kegiatan`
 --
 
-INSERT INTO `proses_kegiatan` (`id_proses`, `id_kegiatan`, `uraian_proses`, `debit_proses`, `kredit_proses`, `saldo_proses`, `tgl_proses`, `ket_proses`) VALUES
-('PK0001', 'PR01', 'Sumbangan dari JTI', '800000', '0', '80000', '2017-12-06', 'diterima oleh bendahara'),
-('PK0002', 'PR01', 'Banner AOM', '0', '60000', '740000', '2017-12-07', ''),
-('PK0003', 'PR01', 'Sewa pickup', '0', '100000', '640000', '2017-12-07', 'angkut ayam'),
-('PK0004', 'PR01', 'Kas Masuk', '245000', '0', '885000', '2017-12-08', 'bulan 11');
+INSERT INTO `proses_kegiatan` (`id_proses`, `id_kegiatan`, `tgl_proses`, `uraian_proses`, `debit_proses`, `kredit_proses`, `saldo_proses`, `ket_proses`) VALUES
+('PK0001', 'PR01', '2017-12-06', 'Sumbangan dari JTI', '800000', '0', '80000', 'diterima oleh bendahara'),
+('PK0002', 'PR01', '2017-12-07', 'Banner AOM', '0', '60000', '740000', ''),
+('PK0003', 'PR01', '2017-12-07', 'Sewa pickup', '0', '100000', '640000', 'angkut ayam'),
+('PK0004', 'PR01', '2017-12-08', 'Kas Masuk', '245000', '0', '885000', 'bulan 11');
 
 -- --------------------------------------------------------
 
@@ -166,9 +167,8 @@ CREATE TABLE `tahun` (
 --
 
 INSERT INTO `tahun` (`id_tahun`, `pilih_tahun`) VALUES
-('th1', 2015),
-('th2', 2016),
-('th3', 2017);
+('TH03', 2017),
+('TH04', 2018);
 
 --
 -- Indexes for dumped tables
