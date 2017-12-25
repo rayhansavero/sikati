@@ -217,100 +217,26 @@ $kegiatan = $_POST['kegiatan'];
           </h2>
       </div>
       <div class="body">
-        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#tambahdata">
-          <i class="material-icons">add</i>
-          <span>Tambah Data</span>
-        </button>
+         <div class="row clearfix">
+        <form class="" action="index.php?page=tambah_data_kegiatan" method="post">
+          <div class="col-md-2">
+            <div class="input-group">
+              <div class="form-line">
+                <input type="number" min="1" class="form-control" placeholder="Jumlah Data" name="jmlTambah" required>
+                <input type="hidden" name="kegiatan" value="<?php echo $kegiatan; ?>" readonly>
+              </div>
+            </div>
+          </div>
+          <button type="submit" name="tambahPengurus" class="btn btn-primary waves-effect">
+            <span>Tambah Data</span>
+          </button>
+        </form>
+        </div>
+        
         <br>
         <br>
 
-        <!--MODAL tambah DATA proses kegiatan-->
-        <div class="modal fade" id="tambahdata" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Kegiatan
-                  <?php
-                  $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
-                  $tampil = mysqli_fetch_array($nama);
-                  echo $tampil['nama_kegiatan'];
-                  ?>
-                </h4>
-              </div>
-              <form action="" method="POST" role="form">
-              <div class="modal-body">
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">assignment</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="hidden" value="<?php echo $pros; ?>" name="idpros" readonly>
-                      <input type="hidden" value="<?php echo $kegiatan; ?>" name="kegiatan" readonly>
-                      <input type="input" class="form-control" placeholder="Uraian" name="uraian">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">attach_money</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="number" min="0"  class="form-control" placeholder="Debit" name="debit">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">attach_money</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="number" min="0"  class="form-control" placeholder="Kredit" name="kredit">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">attach_money</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="number" min="0" class="form-control" placeholder="Saldo" name="saldo">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">date_range</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="date" class="form-control" placeholder="Tanggal" name="tgl">
-                      <!--input type="input" class="form-control" value="<?php $tgl=date('d-m-Y'); echo $tgl; ?>" name="tgl" readonly-->
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">assignment</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="text" class="form-control" placeholder="Keterangan" name="ket">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                <button type="submit" class="btn btn-link waves-effect" name="simpanps">SIMPAN</button>
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
+        
         <!--END MODAL tambah data proses kegiatan-->
 
         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
