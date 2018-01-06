@@ -1,7 +1,7 @@
 <?php
 $con = mysqli_connect('localhost','root','','sikati');
 
-//FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA KEGIATAN
+//===================FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA KEGIATAN===================
 function keg() {
   $con = mysqli_connect('localhost','root','','sikati');
   $query = mysqli_query($con,"select id_kegiatan from kegiatan order by id_kegiatan desc limit 0,1") or die(mysql_error());
@@ -25,7 +25,7 @@ function keg() {
 	}
 		return $no_urut;
 }
-//FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA PROSES KEGIATAN
+//===================FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA PROSES KEGIATAN===================
 function pros() {
   $con = mysqli_connect('localhost','root','','sikati');
   $query = mysqli_query($con,"select id_proses from proses_kegiatan order by id_proses desc limit 0,1") or die(mysql_error());
@@ -59,7 +59,7 @@ function pros() {
 $keg = keg();
 $pros = pros();
 
-//PROSES TAMBAH/EDIT DATA PENGURUS
+//===================PROSES TAMBAH JUDUL KEGIATAN===================
 if (isset($_POST['simpankg'])) {
   $nama = $_POST['nama'];
   $tgl = $_POST['tgl'];
@@ -70,21 +70,41 @@ if (isset($_POST['simpankg'])) {
   </script>
   ";
 }
-elseif (isset($_POST['simpanps'])) {
+//===================PROSES TAMBAH DATA DEBIT BARU===================
+elseif (isset($_POST['simpandebit'])) {
   $kegiatan = $_POST['kegiatan'];
   $tgl = $_POST['tgl'];
   $uraian = $_POST['uraian'];
   $debit = $_POST['debit'];
-  $kredit = $_POST['kredit'];
+  $kredit = 0;
   $saldo = $_POST['saldo'];
+  $saldobaru = $saldo + $debit;
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldo','$ket')") or die(mysql_error());
+  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pasca_kegiatan';
   </script>
   ";
 }
+//===================PROSES TAMBAH DATA KREDIT BARU===================
+elseif (isset($_POST['simpankredit'])) {
+  $kegiatan = $_POST['kegiatan'];
+  $tgl = $_POST['tgl'];
+  $uraian = $_POST['uraian'];
+  $debit = 0;
+  $kredit = $_POST['kredit'];
+  $saldo = $_POST['saldo'];
+  $saldobaru = $saldo - $kredit;
+  $ket = $_POST['ket'];
+  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
+  echo "
+  <script> alert ('Data Kegiatan Baru Berhasil di Tambahkan');
+  document.location='index.php?page=pasca_kegiatan';
+  </script>
+  ";
+}
+//===================PROSES EDIT DATA KEGIATAN===================
 elseif (isset($_POST['update'])) {
   $pros = $_POST['pros'];
   $uraian = $_POST['uraian'];
@@ -100,6 +120,7 @@ elseif (isset($_POST['update'])) {
   </script>
   ";
 }
+//===================PROSES HAPUS DATA KEGIATAN===================
 elseif (isset($_POST['hapus'])) {
   $id = $_POST['hapus'];
   $query = mysqli_query($con,"delete from proses_kegiatan where id_proses='$id' ") or die(mysql_error());
@@ -111,7 +132,7 @@ elseif (isset($_POST['hapus'])) {
 }
 ?>
 
-<!--PILIH PERIODE KEPENGURUSAN-->
+<!--==================================PILIH JUDUL KEGIATAN==================================-->
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
@@ -149,9 +170,9 @@ elseif (isset($_POST['hapus'])) {
     </div>
   </div>
 </div>
-<!--END PILIH PERIODE KEPENGURUSAN-->
+<!--==================================END PILIH JUDUL KEGIATAN==================================-->
 
-<!--MODAL TAMBAH KEGIATAN-->
+<!--==================================MODAL TAMBAH KEGIATAN==================================-->
 <div class="modal fade" id="tambahKegiatan" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -190,7 +211,7 @@ elseif (isset($_POST['hapus'])) {
     </div>
   </div>
 </div>
-<!--END MODAL TAMBAH KEGIATAN-->
+<!--==================================END MODAL TAMBAH KEGIATAN==================================-->
 
 
 <?php
@@ -217,19 +238,21 @@ $kegiatan = $_POST['kegiatan'];
           </h2>
       </div>
       <div class="body">
-        <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#tambahdata">
+        <button type="button" class="btn bg-cyan waves-effect m-r-20" data-toggle="modal" data-target="#tambahdebit">
           <i class="material-icons">add</i>
-          <span>Tambah Data</span>
+          <span>Tambah Data Debit</span>
         </button>
-        <br>
-        <br>
+        <button type="button" class="btn bg-pink waves-effect m-r-20" data-toggle="modal" data-target="#tambahkredit">
+          <i class="material-icons">add</i>
+          <span>Tambah Data Kredit</span>
+        </button>
 
-        <!--MODAL tambah DATA proses kegiatan-->
-        <div class="modal fade" id="tambahdata" tabindex="-1" role="dialog">
-          <div class="modal-dialog modal-sm" role="document">
+        <!--==================================MODAL TAMBAH DEBIT==================================-->
+        <div class="modal fade" id="tambahdebit" role="dialog">
+          <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Kegiatan
+                <h4 class="modal-title">Tambah Data Debit Kegiatan
                   <?php
                   $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
                   $tampil = mysqli_fetch_array($nama);
@@ -247,48 +270,32 @@ $kegiatan = $_POST['kegiatan'];
                     <div class="form-line">
                       <input type="hidden" value="<?php echo $pros; ?>" name="idpros" readonly>
                       <input type="hidden" value="<?php echo $kegiatan; ?>" name="kegiatan" readonly>
-                      <input type="input" class="form-control" placeholder="Uraian" name="uraian">
+                      <input type="input" class="form-control" placeholder="Uraian" name="uraian" required>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="material-icons">attach_money</i>
                     </span>
                     <div class="form-line">
-                      <input type="number" min="0"  class="form-control" placeholder="Debit" name="debit">
+                      <input type="number" min="0" class="form-control" placeholder="Debit" name="debit" required>
+                      <?php
+                      $saldoakhir = mysqli_query($con,"SELECT saldo_proses FROM proses_kegiatan WHERE id_kegiatan='$kegiatan' ORDER BY id_proses DESC LIMIT 0,1");
+                      $tampil = mysqli_fetch_array($saldoakhir);
+                      ?>
+                      <input type="hidden" class="form-control" name="saldo" value="<?php echo $tampil['saldo_proses']; ?>">
                     </div>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">attach_money</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="number" min="0"  class="form-control" placeholder="Kredit" name="kredit">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="material-icons">attach_money</i>
-                    </span>
-                    <div class="form-line">
-                      <input type="number" min="0" class="form-control" placeholder="Saldo" name="saldo">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="material-icons">date_range</i>
                     </span>
                     <div class="form-line">
-                      <input type="date" class="form-control" placeholder="Tanggal" name="tgl">
-                      <!--input type="input" class="form-control" value="<?php $tgl=date('d-m-Y'); echo $tgl; ?>" name="tgl" readonly-->
+                      <input type="date" class="form-control" placeholder="Tanggal" name="tgl" required>
                     </div>
                   </div>
                 </div>
@@ -305,23 +312,98 @@ $kegiatan = $_POST['kegiatan'];
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                <button type="submit" class="btn btn-link waves-effect" name="simpanps">SIMPAN</button>
+                <button type="submit" class="btn btn-link waves-effect" name="simpandebit">SIMPAN</button>
               </div>
               </form>
             </div>
           </div>
         </div>
-        <!--END MODAL tambah data proses kegiatan-->
+        <!--==================================END MODAL TAMBAH DEBIT==================================-->
 
+        <!--==================================MODAL TAMBAH KREDIT==================================-->
+        <div class="modal fade" id="tambahkredit" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Tambah Data Kredit Kegiatan
+                  <?php
+                  $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+                  $tampil = mysqli_fetch_array($nama);
+                  echo $tampil['nama_kegiatan'];
+                  ?>
+                </h4>
+              </div>
+              <form action="" method="POST" role="form">
+              <div class="modal-body">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">assignment</i>
+                    </span>
+                    <div class="form-line">
+                      <input type="hidden" value="<?php echo $pros; ?>" name="idpros" readonly>
+                      <input type="hidden" value="<?php echo $kegiatan; ?>" name="kegiatan" readonly>
+                      <input type="input" class="form-control" placeholder="Uraian" name="uraian" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">attach_money</i>
+                    </span>
+                    <div class="form-line">
+                      <input type="number" min="0" class="form-control" placeholder="Kredit" name="kredit" required>
+                      <?php
+                      $saldoakhir = mysqli_query($con,"SELECT saldo_proses FROM proses_kegiatan WHERE id_kegiatan='$kegiatan' ORDER BY id_proses DESC LIMIT 0,1");
+                      $tampil = mysqli_fetch_array($saldoakhir);
+                      ?>
+                      <input type="hidden" class="form-control" name="saldo" value="<?php echo $tampil['saldo_proses']; ?>">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">date_range</i>
+                    </span>
+                    <div class="form-line">
+                      <input type="date" class="form-control" placeholder="Tanggal" name="tgl" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <i class="material-icons">assignment</i>
+                    </span>
+                    <div class="form-line">
+                      <input type="text" class="form-control" placeholder="Keterangan" name="ket">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                <button type="submit" class="btn btn-link waves-effect" name="simpankredit">SIMPAN</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--==================================END MODAL TAMBAH KREDIT==================================-->
+        <br>
+        <br>
+        <!--==================================TABEL KEGIATAN==================================-->
         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
           <thead>
             <tr>
-              <th class="hidden">No</th>
+              <th class="text">No</th>
+              <th class="text-center">Tanggal</th>
               <th class="text-center">Uraian</th>
               <th class="text-center">Debit</th>
               <th class="text-center">Kredit</th>
               <th class="text-center">Saldo</th>
-              <th class="text-center">Tanggal</th>
               <th class="text-center">Keterangan</th>
               <th class="text-center">Opsi</th>
             </tr>
@@ -337,9 +419,9 @@ $kegiatan = $_POST['kegiatan'];
                 <td width='5%'><?php echo $no++; ?></td>
                 <td><?php echo $has[2]; ?></td>
                 <td><?php echo $has[3]; ?></td>
-                <td><?php echo $has[4]; ?></td>
-                <td><?php echo $has[5]; ?></td>
-                <td><?php echo $has[6]; ?></td>
+                <td>Rp <?php echo $has[4]; ?></td>
+                <td>Rp <?php echo $has[5]; ?></td>
+                <td>Rp <?php echo $has[6]; ?></td>
                 <td><?php echo $has[7]; ?></td>
                 <td td style="text-align:center">
                   <!--TOMBOL EDIT DATA-->
@@ -350,107 +432,105 @@ $kegiatan = $_POST['kegiatan'];
                   <button type="button" class="btn btn-danger btn-xs waves-effect" data-toggle="modal" data-target="#hapuspascaKeg<?php echo $has[0]; ?>">
                     <i class="material-icons">delete</i>
                   </button>
-
-                  <!--MODAL EDIT DATA kegiatan-->
-                  <div class="modal fade" id="editpascaKeg<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-sm" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title">Form Edit Data Kegiatan</h4>
-                        </div>
-                        <form action="" method="POST" role="form">
-                          <div class="modal-body">
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="material-icons">assignment</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="hidden" name="pros" value="<?php echo $has[0]; ?>" readonly>
-                                  <input type="text" class="form-control" placeholder="uraian" name="uraian" value="<?php echo $has[2]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="material-icons">attach_money</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="number" min="0" class="form-control" placeholder="debit" name="debit" value="<?php echo $has[3]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                 <span class="input-group-addon">
-                                  <i class="material-icons">attach_money</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="number" min="0" class="form-control" placeholder="kredit" name="kredit" value="<?php echo $has[4]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                 <span class="input-group-addon">
-                                  <i class="material-icons">attach_money</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="number" min="0" class="form-control" placeholder="saldo" name="saldo" value="<?php echo $has[5]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                 <span class="input-group-addon">
-                                  <i class="material-icons">date_range</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="date" class="form-control" name="tgl" value="<?php echo $has[6]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="input-group">
-                                 <span class="input-group-addon">
-                                  <i class="material-icons">assignment</i>
-                                </span>
-                                <div class="form-line">
-                                  <input type="input" class="form-control" name="ket" placeholder="Keterangan" value="<?php echo $has[7]; ?>">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                            <button type="submit" class="btn btn-link waves-effect" name="update">UPDATE</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  <!--END MODAL EDIT DATA kegiatan-->
-
-                     <!--MODAL HAPUS DATA PENGURUS-->
-                  <div class="modal fade" id="hapuspascaKeg<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
-                    <div class="modal-dialog modal-sm" role="document">
-                      <div class="modal-content">
-                        <form action="" method="POST" role="form">
-                          <div class="modal-body">
-                            Apakah Anda Ingin Menghapus Data <?php echo $has[2]; ?>?
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
-                            <button type="submit" class="btn btn-link waves-effect" name="hapus" value="<?php  echo $has[0]; ?>">HAPUS</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  <!--END MODAL HAPUS DATA PENGURUS-->
-
                 </td>
+                <!--==================================MODAL EDIT DATA kegiatan==================================-->
+                <div class="modal fade" id="editpascaKeg<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Form Edit Data Kegiatan</h4>
+                      </div>
+                      <form action="" method="POST" role="form">
+                        <div class="modal-body">
+                          <div class="col-md-12">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <i class="material-icons">assignment</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="hidden" name="pros" value="<?php echo $has[0]; ?>" readonly>
+                                <input type="text" class="form-control" placeholder="uraian" name="uraian" value="<?php echo $has[2]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group">
+                              <span class="input-group-addon">
+                                <i class="material-icons">attach_money</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="number" min="0" class="form-control" placeholder="debit" name="debit" value="<?php echo $has[3]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group">
+                               <span class="input-group-addon">
+                                <i class="material-icons">attach_money</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="number" min="0" class="form-control" placeholder="kredit" name="kredit" value="<?php echo $has[4]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group">
+                               <span class="input-group-addon">
+                                <i class="material-icons">attach_money</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="number" min="0" class="form-control" placeholder="saldo" name="saldo" value="<?php echo $has[5]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group">
+                               <span class="input-group-addon">
+                                <i class="material-icons">date_range</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="date" class="form-control" name="tgl" value="<?php echo $has[6]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="input-group">
+                               <span class="input-group-addon">
+                                <i class="material-icons">assignment</i>
+                              </span>
+                              <div class="form-line">
+                                <input type="input" class="form-control" name="ket" placeholder="Keterangan" value="<?php echo $has[7]; ?>">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                          <button type="submit" class="btn btn-link waves-effect" name="update">UPDATE</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!--==================================END MODAL EDIT DATA kegiatan==================================-->
+
+                <!--==================================MODAL HAPUS DATA PENGURUS==================================-->
+                <div class="modal fade" id="hapuspascaKeg<?php echo $has[0]; ?>" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                      <form action="" method="POST" role="form">
+                        <div class="modal-body">
+                          Apakah Anda Ingin Menghapus Data <?php echo $has[2]; ?>?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">BATAL</button>
+                          <button type="submit" class="btn btn-link waves-effect" name="hapus" value="<?php  echo $has[0]; ?>">HAPUS</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!--==================================END MODAL HAPUS DATA PENGURUS==================================-->
               </tr>
               <?php } ?>
           </tbody>

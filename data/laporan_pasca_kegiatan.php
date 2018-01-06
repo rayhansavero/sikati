@@ -6,7 +6,7 @@ $con = mysqli_connect('localhost','root','','sikati');
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
-        <h2>List Keuangan pasca Kegiatan </h2>
+        <h2>List Keuangan Pasca Kegiatan </h2>
       </div>
       <div class="body">
         <div class="row clearfix">
@@ -17,7 +17,7 @@ $con = mysqli_connect('localhost','root','','sikati');
                 <i class="material-icons">date_range</i>
               </span>
               <select class="form-control show-tick" name="kegiatan">
-                <option value="">Pilih pasca Kegiatan</option>
+                <option value="">Pilih Pasca Kegiatan</option>
                 <?php
                 $tahun = mysqli_query($con, "select * from kegiatan where id_kegiatan like 'PS%'");
                 while ($row = mysqli_fetch_array($tahun)) {
@@ -47,7 +47,7 @@ $kegiatan = $_POST['kegiatan'];
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
-          <h2>Tabel pasca Kegiatan
+          <h2>Tabel Pasca Kegiatan
             <?php
             $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
             $tampil = mysqli_fetch_array($nama);
@@ -66,11 +66,11 @@ $kegiatan = $_POST['kegiatan'];
           <thead>
             <tr>
               <th class="text-center">No</th>
+              <th class="text-center">Tanggal</th>
               <th class="text-center">Uraian</th>
               <th class="text-center">Debit</th>
               <th class="text-center">Kredit</th>
               <th class="text-center">Saldo</th>
-              <th class="text-center">Tanggal</th>
               <th class="text-center">Keterangan</th>
             </tr>
           </thead>
@@ -84,10 +84,10 @@ $kegiatan = $_POST['kegiatan'];
               <tr>
                 <td width='5%'><?php echo $no++; ?></td>
                 <td><?php echo $has[2]; ?></td>
-                <td>Rp <?php echo $has[3]; ?></td>
+                <td><?php echo $has[3]; ?></td>
                 <td>Rp <?php echo $has[4]; ?></td>
                 <td>Rp <?php echo $has[5]; ?></td>
-                <td><?php echo $has[6]; ?></td>
+                <td>Rp <?php echo $has[6]; ?></td>
                 <td><?php echo $has[7]; ?></td>
               </tr>
               <?php } ?>
