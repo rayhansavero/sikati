@@ -129,7 +129,7 @@ if(!isset($_SESSION['LEVEL'])){
         <ul class="list">
           <li class="header">MENU</li>
             <?php
-                $masuk1 = $_SESSION['LEVEL'] == 'admin';
+                $masuk1 = $_SESSION['LEVEL'] == 'bendahara';
                 if ($masuk1){ 
                 //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'admin') { 
             ?>
