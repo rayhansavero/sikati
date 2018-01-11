@@ -19,7 +19,7 @@ $con = mysqli_connect('localhost','root','','sikati');
               <select class="form-control show-tick" name="kegiatan">
                 <option value="">Pilih Pasca Kegiatan</option>
                 <?php
-                $tahun = mysqli_query($con, "select * from kegiatan where id_kegiatan like 'PS%'");
+                $tahun = mysqli_query($con, "SELECT * FROM kegiatan WHERE id_kegiatan LIKE 'PS%'");
                 while ($row = mysqli_fetch_array($tahun)) {
                 ?>
                 <option value="<?php echo $row['id_kegiatan']; ?>"><?php echo $row['nama_kegiatan']; ?></option>
@@ -49,13 +49,13 @@ $kegiatan = $_POST['kegiatan'];
       <div class="header">
           <h2>Tabel Pasca Kegiatan
             <?php
-            $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+            $nama = mysqli_query($con,"SELECT nama_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
             $tampil = mysqli_fetch_array($nama);
             echo $tampil['nama_kegiatan'];
             ?>
             Tanggal
             <?php
-            $tgl = mysqli_query($con,"select tgl_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+            $tgl = mysqli_query($con,"SELECT tgl_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
             $tampil = mysqli_fetch_array($tgl);
             echo $tampil['tgl_kegiatan'];
             ?>
@@ -77,7 +77,7 @@ $kegiatan = $_POST['kegiatan'];
           <tbody>
             <?php
             $no = 1;
-            $qu = mysqli_query($con,"select * from proses_kegiatan where id_kegiatan='$kegiatan'");
+            $qu = mysqli_query($con,"SELECT * FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
             while ($has = mysqli_fetch_row($qu))
             {
             ?>
@@ -92,27 +92,30 @@ $kegiatan = $_POST['kegiatan'];
               </tr>
               <?php } ?>
           </tbody>
-          <!--tfoot>
-            <th class="text-right">Jumlah</th>
-            <th><?php
-                $debit = mysqli_query($con,"select sum(debit_proses) from proses_kegiatan");
+          <tfoot>
+            <th colspan="3" class="text-right">Jumlah</th>
+            <th>Rp
+                <?php
+                $debit = mysqli_query($con,"SELECT SUM(debit_proses) AS tdebit FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
                 $tampil = mysqli_fetch_array($debit);
-                echo $tampil['sum(debit_proses)'];
+                echo $tampil['tdebit'];
                 ?>
             </th>
-            <th><?php
-                $kredit = mysqli_query($con,"select sum(kredit_proses) from proses_kegiatan");
+            <th>Rp
+                <?php
+                $kredit = mysqli_query($con,"SELECT SUM(kredit_proses) AS tkredit FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
                 $tampil = mysqli_fetch_array($kredit);
-                echo $tampil['sum(kredit_proses)'];
+                echo $tampil['tkredit'];
                 ?>
             </th>
-            <th><?php
-                $saldo = mysqli_query($con,"select sum(saldo_proses) from proses_kegiatan");
+            <th>Rp
+                <?php
+                $saldo = mysqli_query($con,"SELECT SUM(saldo_proses) AS tsaldo FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
                 $tampil = mysqli_fetch_array($saldo);
-                echo $tampil['sum(saldo_proses)'];
+                echo $tampil['tsaldo'];
                 ?>
             </th>
-          </tfoot-->
+          </tfoot>
         </table>
       </div>
     </div>
