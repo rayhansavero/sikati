@@ -3,7 +3,7 @@ $con = mysqli_connect('localhost','root','','sikati');
 
 function idt() {
   $con = mysqli_connect('localhost','root','','sikati');
-  $query = mysqli_query($con,"select id_tahun from tahun order by id_tahun desc limit 0,1") or die(mysql_error());
+  $query = mysqli_query($con,"SELECT id_tahun FROM tahun ORDER BY id_tahun DESC LIMIT 0,1") or die(mysql_error());
 	list ($no_temp) = mysqli_fetch_row($query);
 
 	if ($no_temp == '') {
@@ -30,7 +30,7 @@ $idt = idt();
 //PROSES EDIT dan HAPUS DATA PENGURUS
 if (isset($_POST['simpanper'])) {
   $tahun = $_POST['tahun'];
-  $query = mysqli_query($con,"insert into tahun values ('$idt','$tahun')") or die(mysql_error());
+  $query = mysqli_query($con,"INSERT INTO tahun VALUES ('$idt','$tahun')") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Simpan');
   document.location='index.php?page=pengurus';
@@ -39,7 +39,7 @@ if (isset($_POST['simpanper'])) {
 }elseif (isset($_POST['update'])) {
   $id = $_POST['id_pengurus'];
   $nama = $_POST['nama_pengurus'];
-  $query = mysqli_query($con,"update pengurus set nama_pengurus='$nama' where id_pengurus='$id' ") or die(mysql_error());
+  $query = mysqli_query($con,"UPDATE pengurus SET nama_pengurus='$nama' WHERE id_pengurus='$id' ") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Update');
   document.location='index.php?page=pengurus';
@@ -48,7 +48,7 @@ if (isset($_POST['simpanper'])) {
 }
 elseif (isset($_POST['hapus'])) {
   $id = $_POST['hapus'];
-  $query = mysqli_query($con,"delete from pengurus where id_pengurus='$id' ") or die(mysql_error());
+  $query = mysqli_query($con,"DELETE FROM pengurus WHERE id_pengurus='$id' ") or die(mysql_error());
   echo "
   <script> alert ('Data Berhasil di Hapus');
   document.location='index.php?page=pengurus';
@@ -73,7 +73,7 @@ elseif (isset($_POST['hapus'])) {
                 <select class="form-control show-tick" name="tahun">
                   <option value="">Pilih Tahun</option>
                   <?php
-                  $tahun = mysqli_query($con, "select * from tahun");
+                  $tahun = mysqli_query($con, "SELECT * FROM tahun");
                   while ($row = mysqli_fetch_array($tahun)) { ?>
                   <option value="<?php echo $row['id_tahun']; ?>"><?php echo $row['pilih_tahun']; ?></option>
                   <?php } ?>
@@ -136,7 +136,7 @@ if (isset($_POST['tampil'])) {
         <h2>
           Tabel Pengurus HMJ TI Periode
           <?php
-          $periode = mysqli_query($con,"select pilih_tahun from tahun where id_tahun='$tahun'");
+          $periode = mysqli_query($con,"SELECT pilih_tahun FROM tahun WHERE id_tahun='$tahun'");
           $per = mysqli_fetch_array($periode);
           echo $per['pilih_tahun'];
           ?>
@@ -172,7 +172,7 @@ if (isset($_POST['tampil'])) {
             <tbody>
               <?php
               $no = 1;
-              $query = mysqli_query($con,"select * from pengurus where id_tahun='$tahun'");
+              $query = mysqli_query($con,"SELECT * FROM pengurus WHERE id_tahun='$tahun'");
               while ($has = mysqli_fetch_row($query)) {
               ?>
               <tr>

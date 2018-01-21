@@ -7,7 +7,7 @@ $con = mysqli_connect('localhost','root','','sikati');
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
-        <h2>Menu Laporan Kas Rutin</h2>
+        <h2>Menu Laporan Buku Besar Kas Rutin</h2>
       </div>
       <div class="body">
         <form action="" method="POST" role="form">
@@ -61,7 +61,7 @@ $tahun = $_POST['tahun'];
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
-        <h2>Tabel Kas Rutin Bulan
+        <h2>Tabel Buku Besar Kas Bulan
           <?php
           $namabulan = array('01' => 'Januari','02' => 'Februari','03' => 'Maret','04' => 'April',
                               '05' => 'Mei','06' => 'Juni','07' => 'Juli','08' => 'Agustus',
@@ -78,36 +78,52 @@ $tahun = $_POST['tahun'];
             <thead>
               <tr>
                 <th class="text-center">No</th>
-                <th class="text-center">Nama Pengurus</th>
-                <th class="text-center">Jumlah Bayar</th>
-                <th class="text-center">Tanggal Bayar</th>
+                <th class="text-center">Tanggal</th>
+                <th class="text-center">Uraian</th>
+                <th class="text-center">Debit</th>
+                <th class="text-center">Kredit</th>
+                <th class="text-center">Saldo</th>
+                <th class="text-center">Keterangan</th>
               </tr>
             </thead>
             <tbody>
               <?php
               $no = 1;
-              $query = mysqli_query($con, "SELECT * FROM bayar_kas WHERE month(tgl_bayar_kas)='$bulan' AND year(tgl_bayar_kas)='$tahun'");
+              $query = mysqli_query($con, "SELECT * FROM buku_besar_kas WHERE month(tgl_bbs)='$bulan' AND year(tgl_bbs)='$tahun'");
               while ($has = mysqli_fetch_array($query)) {
               ?>
               <tr>
                 <td><?php echo $no++; ?></td>
-                <td><?php $tampilpeng = mysqli_query($con, "SELECT * FROM pengurus WHERE id_pengurus='$has[id_pengurus]'");
-                                $peng	= mysqli_fetch_array($tampilpeng);
-                                        echo $peng['nama_pengurus']
-                    ?>
-                </td>
+                <td><?php echo $has[1]; ?></td>
+                <td><?php echo $has[2]; ?></td>
+                <td>Rp <?php echo $has[3]; ?></td>
                 <td>Rp <?php echo $has[4]; ?></td>
-                <td><?php echo $has[3]; ?></td>
+                <td>Rp <?php echo $has[5]; ?></td>
+                <td><?php echo $has[6]; ?></td>
               </tr>
             <?php } ?>
             </tbody>
             <tfoot>
-              <th colspan="2" class="text-right">Jumlah</th>
+              <th colspan="3" class="text-right">Jumlah</th>
               <th>Rp
                   <?php
-                  $jml = mysqli_query($con,"SELECT SUM(jumlah_bayar_kas) AS jmlkas FROM bayar_kas WHERE MONTH(tgl_bayar_kas)='$bulan' AND YEAR(tgl_bayar_kas)='$tahun'");
-                  $tampil = mysqli_fetch_array($jml);
-                  echo $tampil['jmlkas'];
+                  $debit = mysqli_query($con,"SELECT SUM(debit_bbs) AS tdebit FROM buku_besar_kas WHERE month(tgl_bbs)='$bulan' AND year(tgl_bbs)='$tahun'");
+                  $tampil = mysqli_fetch_array($debit);
+                  echo $tampil['tdebit'];
+                  ?>
+              </th>
+              <th>Rp
+                  <?php
+                  $kredit = mysqli_query($con,"SELECT SUM(kredit_bbs) AS tkredit FROM buku_besar_kas WHERE month(tgl_bbs)='$bulan' AND year(tgl_bbs)='$tahun'");
+                  $tampil = mysqli_fetch_array($kredit);
+                  echo $tampil['tkredit'];
+                  ?>
+              </th>
+              <th>Rp
+                  <?php
+                  $saldo = mysqli_query($con,"SELECT SUM(saldo_bbs) AS tsaldo FROM buku_besar_kas WHERE month(tgl_bbs)='$bulan' AND year(tgl_bbs)='$tahun'");
+                  $tampil = mysqli_fetch_array($saldo);
+                  echo $tampil['tsaldo'];
                   ?>
               </th>
             </tfoot>

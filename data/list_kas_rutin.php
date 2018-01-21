@@ -17,7 +17,7 @@ $con = mysqli_connect('localhost','root','','sikati');
               <span class="input-group-addon">
                 <i class="material-icons">date_range</i>
               </span>
-              <select class="form-control show-tick" name="tahun">
+              <SELECT class="form-control show-tick" name="tahun">
                 <option value="">Pilih Periode</option>
                 <?php
                 $tahun = mysqli_query($con, "SELECT * FROM tahun");
@@ -25,7 +25,7 @@ $con = mysqli_connect('localhost','root','','sikati');
                 ?>
                 <option value="<?php echo $row['id_tahun']; ?>"><?php echo $row['pilih_tahun']; ?></option>
                 <?php } ?>
-              </select>
+              </SELECT>
             </div>
           </div>
           <button type="submit" class="btn btn-primary waves-effect" name="tampil">
@@ -50,7 +50,7 @@ if (isset($_POST['tampil'])) {
         <h2>
           Data Kas Periode
           <?php
-          $periode = mysqli_query($con,"select pilih_tahun from tahun where id_tahun='$tahun'");
+          $periode = mysqli_query($con,"SELECT pilih_tahun FROM tahun WHERE id_tahun='$tahun'");
           $per = mysqli_fetch_array($periode);
           echo $per['pilih_tahun'];
           ?>
@@ -116,6 +116,12 @@ if (isset($_POST['tampil'])) {
                           <h4 class="modal-title">Detail Pembayaran <?php echo $has[1]; ?></h4>
                         </div>
                         <div class="modal-body">
+                          <div class="col-md-6" style="text-align: left;">
+                            <b>Tanggal Pembayaran</b>
+                          </div>
+                          <div class="col-md-6" style="text-align: left;">
+                            <b>Jumlah Bayar</b>
+                          </div>
                           <?php
                           $detail = mysqli_query($con,"SELECT * FROM bayar_kas WHERE id_pengurus='$has[0]'");
                           while ($data = mysqli_fetch_row($detail))
@@ -126,9 +132,7 @@ if (isset($_POST['tampil'])) {
                               <span class="input-group-addon">
                                 <i class="material-icons">date_range</i>
                               </span>
-                              <div class="form-line">
-                                <input type="text" class="form-control" value="<?php echo $data[3];?>" readonly>
-                              </div>
+                              <input type="text" class="form-control" value="Rp <?php echo $data[3];?>" readonly>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -136,9 +140,7 @@ if (isset($_POST['tampil'])) {
                               <span class="input-group-addon">
                                 <i class="material-icons">attach_money</i>
                               </span>
-                              <div class="form-line">
-                                <input type="text" class="form-control" value="Rp <?php echo $data[4];?>" readonly>
-                              </div>
+                              <input type="text" class="form-control" value="Rp <?php echo $data[4];?>" readonly>
                             </div>
                           </div>
                         <?php } ?>

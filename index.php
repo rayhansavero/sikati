@@ -12,9 +12,9 @@ if(!isset($_SESSION['LEVEL'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Admin | Sikati</title>
+    <title>Welcome to Sikati</title>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="invention.ico" type="image/x-icon">
 
     <link href="font/roboto_400_700_latin_cyrillic.css" rel="stylesheet" type="text/css">
     <link href="font/material_icon.css" rel="stylesheet" type="text/css">
@@ -84,8 +84,8 @@ if(!isset($_SESSION['LEVEL'])){
 
 </head>
 <body class="theme-red">
-  <!-- Page Loader -->
-  <!--div class="page-loader-wrapper">
+  <!-- Page Loader >
+  <div class="page-loader-wrapper">
     <div class="loader">
       <div class="preloader">
         <div class="spinner-layer pl-red">
@@ -99,7 +99,7 @@ if(!isset($_SESSION['LEVEL'])){
       </div>
       <p>Please wait...</p>
     </div>
-  </div-->
+  </div>
   <!-- #END# Page Loader -->
 
   <div class="overlay"></div>
@@ -121,7 +121,7 @@ if(!isset($_SESSION['LEVEL'])){
           <img src="images/user.png" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
-          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">WELLCOME <?php echo $_SESSION['LEVEL'] ?></div>
+          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-transform: uppercase;">welcome <?php echo $_SESSION['LEVEL'] ?></div>
         </div>
       </div>
 
@@ -130,8 +130,8 @@ if(!isset($_SESSION['LEVEL'])){
           <li class="header">MENU</li>
             <?php
                 $masuk1 = $_SESSION['LEVEL'] == 'bendahara';
-                if ($masuk1){ 
-                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'admin') { 
+                if ($masuk1){
+                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'admin') {
             ?>
           <!--MENU HOME-->
           <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
@@ -151,7 +151,20 @@ if(!isset($_SESSION['LEVEL'])){
               </li>
               <li <?php if($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
                 <a href="index.php?page=laporan_kas">Laporan Kas Rutin</a>
-              </li>';    
+              </li>
+            </ul>
+          </li>
+          <!--MENU BUKU BESAR KAS-->
+          <li <?php if($_GET['page']=='buku_besar_kas') {echo "class='active'";}
+                    elseif($_GET['page']=='laporan_buku_besar_kas') {echo "class='active'";}?>>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Buku Besar Kas</span></a>
+            <ul class="ml-menu">
+              <li <?php if($_GET['page']=='buku_besar_kas') {echo "class='active'";}?>>
+                <a href="index.php?page=buku_besar_kas">Data Buku Besar Kas</a>
+              </li>
+              <li <?php if($_GET['page']=='laporan_buku_besar_kas') {echo "class='active'";}?>>
+                <a href="index.php?page=laporan_buku_besar_kas">Laporan Buku Besar Kas</a>
+              </li>
             </ul>
           </li>
           <!--MENU KEGIATAN-->
@@ -176,17 +189,15 @@ if(!isset($_SESSION['LEVEL'])){
             </ul>
           </li>
           <li>
-            <a href="pages/changelogs.html"><i class="material-icons">update</i><span>Dari Template</span></a>
-          </li>
-          <li>
             <a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
           </li>
             <?php } ?>
-           <!--=========================================================================================================--> 
+<!--=============================================================================================================================-->
+<!--=============================================================================================================================-->
             <?php
                 $masuk2 = $_SESSION['LEVEL'] == 'kahim';
-                if ($masuk2){ 
-                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'kahim') { 
+                if ($masuk2){
+                //if(isset($_SESSION['LEVEL']) && $_SESSION['LEVEL'] != 'kahim') {
             ?>
           <!--MENU HOME-->
           <li <?php if($_GET['page']=='home') {echo "class='active'";}?>>
@@ -197,21 +208,17 @@ if(!isset($_SESSION['LEVEL'])){
             <a href="index.php?page=pengurus"><i class="material-icons">people</i><span>List Pengurus</span></a>
           </li>
           <!--MENU KAS RUTIN-->
-          <li <?php if($_GET['page']=='kas_rutin') {echo "class='active'";}
-                    elseif($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
-            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Kas Rutin</span></a>
-            <ul class="ml-menu">
-              <li <?php if($_GET['page']=='laporan_kas') {echo "class='active'";}?>>
-                <a href="index.php?page=laporan_kas">Laporan Kas Rutin</a>
-              </li>';    
-            </ul>
+          <li <?php if($_GET['page']=='kas_rutin') {echo "class='active'";}?>>
+            <a href="index.php?page=kas_rutin"><i class="material-icons">assignment</i><span>Laporan Kas Rutin</span></a>
+          </li>
+          <!--MENU BUKU BESAR KAS-->
+          <li <?php if($_GET['page']=='buku_besar_kas') {echo "class='active'";}?>>
+            <a href="index.php?page=buku_besar_kas"><i class="material-icons">assignment</i><span>Laporan Buku Besar Kas</span></a>
           </li>
           <!--MENU KEGIATAN-->
-          <li <?php if($_GET['page']=='pra_kegiatan') {echo "class='active'";}
-                      elseif($_GET['page']=='pasca_kegiatan') {echo "class='active'";}
-                      elseif($_GET['page']=='laporan_pra') {echo "class='active'";}
-                      elseif($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
-            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>List Keuangan Kegiatan</span></a>
+          <li <?php if($_GET['page']=='laporan_pra') {echo "class='active'";}
+                    elseif($_GET['page']=='laporan_pasca') {echo "class='active'";}?>>
+            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">assignment</i><span>Laporan Keuangan Kegiatan</span></a>
             <ul class="ml-menu">
               <li <?php if($_GET['page']=='laporan_pra') {echo "class='active'";}?>>
                 <a href="index.php?page=laporan_pra">Laporan Pra Kegiatan</a>
@@ -222,16 +229,13 @@ if(!isset($_SESSION['LEVEL'])){
             </ul>
           </li>
           <li>
-            <a href="pages/changelogs.html"><i class="material-icons">update</i><span>Dari Template</span></a>
-          </li>
-          <li>
             <a href="logout.php"><i class="material-icons">power_settings_new</i><span>Log Out</span></a>
           </li>
             <?php } ?>
         </ul>
       </div>
-        
-        
+
+
 
 
       <!--FOOTER-->
@@ -261,6 +265,9 @@ if(!isset($_SESSION['LEVEL'])){
         case 'kas_rutin':
         include "data/list_kas_rutin.php";
         break;
+        case 'buku_besar_kas':
+        include "data/buku_besar_kas.php";
+        break;
         case 'pra_kegiatan':
         include "data/pra_kegiatan.php";
         break;
@@ -270,6 +277,9 @@ if(!isset($_SESSION['LEVEL'])){
 
         case 'laporan_kas':
         include "data/laporan_kas_rutin.php";
+        break;
+        case 'laporan_buku_besar_kas':
+        include "data/laporan_buku_besar_kas.php";
         break;
         case 'laporan_pra':
         include "data/laporan_pra_kegiatan.php";

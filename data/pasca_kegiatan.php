@@ -4,7 +4,7 @@ $con = mysqli_connect('localhost','root','','sikati');
 //===================FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA KEGIATAN===================
 function keg() {
   $con = mysqli_connect('localhost','root','','sikati');
-  $query = mysqli_query($con,"select id_kegiatan from kegiatan order by id_kegiatan desc limit 0,1") or die(mysql_error());
+  $query = mysqli_query($con,"SELECT id_kegiatan FROM kegiatan ORDER BY id_kegiatan DESC LIMIT 0,1") or die(mysql_error());
 	list ($no_temp) = mysqli_fetch_row($query);
 
 	if ($no_temp == '') {
@@ -28,7 +28,7 @@ function keg() {
 //===================FUNGSI UNTUK MEMBUAT ID MENJADI AUTONUMBER (HURUF+ANGKA) PADA PROSES KEGIATAN===================
 function pros() {
   $con = mysqli_connect('localhost','root','','sikati');
-  $query = mysqli_query($con,"select id_proses from proses_kegiatan order by id_proses desc limit 0,1") or die(mysql_error());
+  $query = mysqli_query($con,"SELECT id_proses FROM proses_kegiatan ORDER BY id_proses DESC LIMIT 0,1") or die(mysql_error());
 	list ($no_temp) = mysqli_fetch_row($query);
 
 	if ($no_temp == '') {
@@ -63,7 +63,7 @@ $pros = pros();
 if (isset($_POST['simpankg'])) {
   $nama = $_POST['nama'];
   $tgl = $_POST['tgl'];
-  $query = mysqli_query($con,"insert into kegiatan values ('$keg','$nama','$tanggal')") or die(mysql_error());
+  $query = mysqli_query($con,"INSERT INTO kegiatan VALUES ('$keg','$nama','$tgl')") or die(mysql_error());
   echo "
   <script> alert ('Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pasca_kegiatan';
@@ -80,7 +80,7 @@ elseif (isset($_POST['simpandebit'])) {
   $saldo = $_POST['saldo'];
   $saldobaru = $saldo + $debit;
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
+  $query = mysqli_query($con,"INSERT INTO proses_kegiatan VALUES ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pasca_kegiatan';
@@ -97,7 +97,7 @@ elseif (isset($_POST['simpankredit'])) {
   $saldo = $_POST['saldo'];
   $saldobaru = $saldo - $kredit;
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"insert into proses_kegiatan values ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
+  $query = mysqli_query($con,"INSERT INTO proses_kegiatan VALUES ('$pros','$kegiatan','$tgl','$uraian','$debit','$kredit','$saldobaru','$ket')") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Baru Berhasil di Tambahkan');
   document.location='index.php?page=pasca_kegiatan';
@@ -113,7 +113,7 @@ elseif (isset($_POST['update'])) {
   $saldo = $_POST['saldo'];
   $tgl = $_POST['tgl'];
   $ket = $_POST['ket'];
-  $query = mysqli_query($con,"update proses_kegiatan set tgl_proses='$tgl',uraian_proses='$uraian',debit_proses='$debit',kredit_proses='$kredit',saldo_proses='$saldo',ket_proses='$ket' where id_proses='$pros' ") or die(mysql_error());
+  $query = mysqli_query($con,"UPDATE proses_kegiatan SET tgl_proses='$tgl',uraian_proses='$uraian',debit_proses='$debit',kredit_proses='$kredit',saldo_proses='$saldo',ket_proses='$ket' WHERE id_proses='$pros' ") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Berhasil di Update');
   document.location='index.php?page=pasca_kegiatan';
@@ -123,7 +123,7 @@ elseif (isset($_POST['update'])) {
 //===================PROSES HAPUS DATA KEGIATAN===================
 elseif (isset($_POST['hapus'])) {
   $id = $_POST['hapus'];
-  $query = mysqli_query($con,"delete from proses_kegiatan where id_proses='$id' ") or die(mysql_error());
+  $query = mysqli_query($con,"DELETE FROM proses_kegiatan WHERE id_proses='$id' ") or die(mysql_error());
   echo "
   <script> alert ('Data Kegiatan Berhasil di Hapus');
   document.location='index.php?page=pasca_kegiatan';
@@ -147,15 +147,15 @@ elseif (isset($_POST['hapus'])) {
               <span class="input-group-addon">
                 <i class="material-icons">date_range</i>
               </span>
-              <select class="form-control show-tick" name="kegiatan">
+              <SELECT class="form-control show-tick" name="kegiatan">
                 <option value="">Pilih pasca Kegiatan</option>
                 <?php
-                $tahun = mysqli_query($con, "select * from kegiatan where id_kegiatan like 'PS%'");
+                $tahun = mysqli_query($con, "SELECT * FROM kegiatan WHERE id_kegiatan like 'PS%'");
                 while ($row = mysqli_fetch_array($tahun)) {
                 ?>
                 <option value="<?php echo $row['id_kegiatan']; ?>"><?php echo $row['nama_kegiatan']; ?></option>
                 <?php } ?>
-              </select>
+              </SELECT>
             </div>
           </div>
             <button type="submit" class="btn btn-primary waves-effect" name="tampil">
@@ -225,13 +225,13 @@ $kegiatan = $_POST['kegiatan'];
       <div class="header">
           <h2>Tabel Pasca Kegiatan
             <?php
-            $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+            $nama = mysqli_query($con,"SELECT nama_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
             $tampil = mysqli_fetch_array($nama);
             echo $tampil['nama_kegiatan'];
             ?>
             Tanggal
             <?php
-            $tgl = mysqli_query($con,"select tgl_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+            $tgl = mysqli_query($con,"SELECT tgl_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
             $tampil = mysqli_fetch_array($tgl);
             echo $tampil['tgl_kegiatan'];
             ?>
@@ -254,7 +254,7 @@ $kegiatan = $_POST['kegiatan'];
               <div class="modal-header">
                 <h4 class="modal-title">Tambah Data Debit Kegiatan
                   <?php
-                  $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+                  $nama = mysqli_query($con,"SELECT nama_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
                   $tampil = mysqli_fetch_array($nama);
                   echo $tampil['nama_kegiatan'];
                   ?>
@@ -327,7 +327,7 @@ $kegiatan = $_POST['kegiatan'];
               <div class="modal-header">
                 <h4 class="modal-title">Tambah Data Kredit Kegiatan
                   <?php
-                  $nama = mysqli_query($con,"select nama_kegiatan from kegiatan where id_kegiatan='$kegiatan'");
+                  $nama = mysqli_query($con,"SELECT nama_kegiatan FROM kegiatan WHERE id_kegiatan='$kegiatan'");
                   $tampil = mysqli_fetch_array($nama);
                   echo $tampil['nama_kegiatan'];
                   ?>
@@ -411,7 +411,7 @@ $kegiatan = $_POST['kegiatan'];
           <tbody>
             <?php
             $no = 1;
-            $qu = mysqli_query($con,"select * from proses_kegiatan where id_kegiatan='$kegiatan'");
+            $qu = mysqli_query($con,"SELECT * FROM proses_kegiatan WHERE id_kegiatan='$kegiatan'");
             while ($has = mysqli_fetch_row($qu))
             {
             ?>
